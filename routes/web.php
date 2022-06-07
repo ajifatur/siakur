@@ -113,6 +113,9 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/mutasi-siswa/edit/{id}', 'MutasiSiswaController@edit')->name('admin.mutasi-siswa.edit');
     Route::post('/admin/mutasi-siswa/update', 'MutasiSiswaController@update')->name('admin.mutasi-siswa.update');
     Route::post('/admin/mutasi-siswa/delete', 'MutasiSiswaController@delete')->name('admin.mutasi-siswa.delete');
+    
+    // Jadwal
+    Route::get('/admin/jadwal', 'JadwalController@index')->name('admin.jadwal.index');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();

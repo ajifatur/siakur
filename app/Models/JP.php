@@ -22,7 +22,7 @@ class JP extends Model
      * @var array
      */
     protected $fillable = [
-        'hari', 'jam_mulai', 'jam_selesai'
+        'jam_mulai', 'jam_selesai'
     ];
 
     // /**

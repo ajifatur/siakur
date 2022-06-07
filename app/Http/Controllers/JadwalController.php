@@ -6,9 +6,11 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+// use App\Models\Jadwal;
 use App\Models\JP;
+use App\Models\Rombel;
 
-class JPController extends Controller
+class JadwalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,12 +23,16 @@ class JPController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data JP
+        // Mengambil data jam pelajaran
         $jp = JP::orderBy('jam_mulai','asc')->get();
 
+        // Mengambil data rombel
+        $rombel = Rombel::orderBy('nama','asc')->get();
+
         // View
-        return view('admin/jp/index', [
-            'jp' => $jp
+        return view('admin/jadwal/index', [
+            'jp' => $jp,
+            'rombel' => $rombel,
         ]);
     }
 
@@ -40,8 +46,13 @@ class JPController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
+        // Mengambil data siswa
+        $siswa = Siswa::orderBy('nama','asc')->get();
+
         // View
-        return view('admin/jp/create');
+        return view('admin/mutasi-siswa/create', [
+            'siswa' => $siswa,
+        ]);
     }
 
     /**
@@ -54,8 +65,9 @@ class JPController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
+            'siswa' => 'required',
+            'tujuan' => 'required',
+            'tanggal' => 'required',
         ]);
         
         // Check errors
@@ -64,14 +76,16 @@ class JPController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Simpan jam pelajaran
-            $jp = new JP;
-            $jp->jam_mulai = $request->jam_mulai;
-            $jp->jam_selesai = $request->jam_selesai;
-            $jp->save();
+            // Simpan mutasi siswa
+            $mutasi_siswa = new MutasiSiswa;
+            $mutasi_siswa->siswa_id = $request->siswa;
+            $mutasi_siswa->tujuan = $request->tujuan;
+            $mutasi_siswa->tanggal = DateTimeExt::change($request->tanggal);
+            $mutasi_siswa->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
+            $mutasi_siswa->save();
 
             // Redirect
-            return redirect()->route('admin.jp.index')->with(['message' => 'Berhasil menambah data.']);
+            return redirect()->route('admin.mutasi-siswa.index')->with(['message' => 'Berhasil menambah data.']);
         }
     }
 
@@ -86,12 +100,16 @@ class JPController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data jam pelajaran
-        $jp = JP::findOrFail($id);
+        // Mengambil data mutasi siswa
+        $mutasi_siswa = MutasiSiswa::findOrFail($id);
+
+        // Mengambil data siswa
+        $siswa = Siswa::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/jp/edit', [
-            'jp' => $jp
+        return view('admin/mutasi-siswa/edit', [
+            'mutasi_siswa' => $mutasi_siswa,
+            'siswa' => $siswa,
         ]);
     }
 
@@ -105,8 +123,9 @@ class JPController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
+            'siswa' => 'required',
+            'tujuan' => 'required',
+            'tanggal' => 'required',
         ]);
         
         // Check errors
@@ -115,14 +134,15 @@ class JPController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Update data jp
-            $jp = JP::find($request->id);
-            $jp->jam_mulai = $request->jam_mulai;
-            $jp->jam_selesai = $request->jam_selesai;
-            $jp->save();
+            // Update data mutasi siswa
+            $mutasi_siswa = MutasiSiswa::find($request->id);
+            $mutasi_siswa->siswa_id = $request->siswa;
+            $mutasi_siswa->tujuan = $request->tujuan;
+            $mutasi_siswa->tanggal = DateTimeExt::change($request->tanggal);
+            $mutasi_siswa->save();
 
             // Redirect
-            return redirect()->route('admin.jp.index')->with(['message' => 'Berhasil mengupdate data.']);
+            return redirect()->route('admin.mutasi-siswa.index')->with(['message' => 'Berhasil mengupdate data.']);
         }
     }
 
@@ -137,13 +157,13 @@ class JPController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
         
-        // Mengambil data jam pelajaran
-        $jp = JP::find($request->id);
+        // Mengambil data mutasi siswa
+        $mutasi_siswa = MutasiSiswa::findOrFail($request->id);
 
-        // Menghapus data jam pelajaran
-        $jp->delete();
+        // Menghapus data mutasi siswa
+        $mutasi_siswa->delete();
 
         // Redirect
-        return redirect()->route('admin.jp.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.mutasi-siswa.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }

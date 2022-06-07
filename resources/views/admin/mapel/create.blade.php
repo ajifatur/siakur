@@ -22,6 +22,15 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">Kode <span class="text-danger">*</span></label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="text" name="kode" class="form-control form-control-sm {{ $errors->has('kode') ? 'border-danger' : '' }}" value="{{ old('kode') }}">
+                            @if($errors->has('kode'))
+                            <div class="small text-danger">{{ $errors->first('kode') }}</div>
+                            @endif
+                        </div>
+                    </div>
                     <hr>
                     <div class="row">
                         <div class="col-lg-2 col-md-3"></div>

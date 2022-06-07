@@ -25,6 +25,7 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
+                                <th width="100">Kode</th>
                                 <th>Nama</th>
                                 <th width="60">Opsi</th>
                             </tr>
@@ -33,6 +34,7 @@
                             @foreach($mapel as $m)
                             <tr>
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
+                                <td>{{ $m->kode }}</td>
                                 <td>{{ $m->nama }}</td>
                                 <td align="center">
                                     <div class="btn-group">

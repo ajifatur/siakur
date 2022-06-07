@@ -22,7 +22,7 @@ class Mapel extends Model
      * @var array
      */
     protected $fillable = [
-        'nama'
+        'nama', 'singkatan'
     ];
 
     // /**

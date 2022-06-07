@@ -17,9 +17,18 @@
                     <div class="row mb-3">
                         <label class="col-lg-2 col-md-3 col-form-label">Nama <span class="text-danger">*</span></label>
                         <div class="col-lg-10 col-md-9">
-                            <input type="text" name="nama" class="form-control form-control-sm {{ $errors->has('nama') ? 'border-danger' : '' }}" value="{{ $mapel->nama }}" autofocus>
+                            <input type="text" name="nama" class="form-control form-control-sm {{ $errors->has('nama') ? 'border-danger' : '' }}" value="{{ $mapel->nama }}">
                             @if($errors->has('nama'))
                             <div class="small text-danger">{{ $errors->first('nama') }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">Kode <span class="text-danger">*</span></label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="text" name="kode" class="form-control form-control-sm {{ $errors->has('kode') ? 'border-danger' : '' }}" value="{{ $mapel->kode }}">
+                            @if($errors->has('kode'))
+                            <div class="small text-danger">{{ $errors->first('kode') }}</div>
                             @endif
                         </div>
                     </div>

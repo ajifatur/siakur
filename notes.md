@@ -19,7 +19,6 @@ Password: password
 ### Delayed
 - Input foto guru dan siswa
 - Mengkoneksikan data guru / siswa dengan data user
-- Menu belum tertata (nanti bisa melalui admin)
 
 
 ### Issue

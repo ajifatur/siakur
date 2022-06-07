@@ -7,7 +7,7 @@
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-2 mb-sm-0">Kelola Jam Pelajaran</h1>
     <div class="btn-group">
-        <a href="{{ route('admin.jp.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah jp</a>
+        <a href="{{ route('admin.jp.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Jam Pelajaran</a>
     </div>
 </div>
 <div class="row">
@@ -25,7 +25,6 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
-                                <th>Hari</th>
                                 <th>Jam Mulai</th>
                                 <th>Jam Selesai</th>
                                 <th width="60">Opsi</th>
@@ -35,7 +34,6 @@
                             @foreach($jp as $j)
                             <tr>
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
-                                <td>{{ hari($j->hari) }}</td>
                                 <td>{{ $j->jam_mulai }}</td>
                                 <td>{{ $j->jam_selesai }}</td>
                                 <td align="center">

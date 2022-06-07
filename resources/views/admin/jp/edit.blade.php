@@ -15,20 +15,6 @@
                     @csrf
                     <input type="hidden" name="id" value="{{ $jp->id }}">
                     <div class="row mb-3">
-                        <label class="col-lg-2 col-md-3 col-form-label">Hari <span class="text-danger">*</span></label>
-                        <div class="col-lg-10 col-md-9">
-                            <select name="hari" class="form-select form-select-sm {{ $errors->has('hari') ? 'border-danger' : '' }}">
-                                <option value="" disabled selected>--Pilih--</option>
-                                @for($i=1;$i<=6;$i++)
-                                <option value="{{ $i }}" {{ $jp->hari == $i ? 'selected' : '' }}>{{ hari($i) }}</option>
-                                @endfor
-                            </select>
-                            @if($errors->has('hari'))
-                            <div class="small text-danger">{{ $errors->first('hari') }}</div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="row mb-3">
                         <label class="col-lg-2 col-md-3 col-form-label">Jam Mulai <span class="text-danger">*</span></label>
                         <div class="col-lg-10 col-md-9">
                             <div class="input-group input-group-sm">
