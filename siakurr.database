@@ -1,0 +1,967 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 07, 2022 at 02:21 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `siakurr`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guru`
+--
+
+CREATE TABLE `guru` (
+  `id` int(11) NOT NULL,
+  `nomor_identitas` varchar(20) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `jenis_kelamin` varchar(8) NOT NULL,
+  `tempat_lahir` varchar(255) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `nomor_telepon` varchar(20) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `guru`
+--
+
+INSERT INTO `guru` (`id`, `nomor_identitas`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `nomor_telepon`, `alamat`, `foto`, `created_at`, `updated_at`) VALUES
+(2, '12345', 'Ahmad Najib, S.Psi', 'L', 'H', '2020-10-10', '081234567890', 'H', NULL, '2022-06-06 07:45:33', '2022-06-06 07:45:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guru_mapel`
+--
+
+CREATE TABLE `guru_mapel` (
+  `id` int(11) NOT NULL,
+  `guru_id` int(11) NOT NULL,
+  `mapel_id` int(11) NOT NULL,
+  `ta_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `guru_mapel`
+--
+
+INSERT INTO `guru_mapel` (`id`, `guru_id`, `mapel_id`, `ta_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 0, '2022-06-06 07:45:56', '2022-06-06 07:45:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jp`
+--
+
+CREATE TABLE `jp` (
+  `id` int(11) NOT NULL,
+  `hari` int(11) NOT NULL,
+  `jam_mulai` varchar(11) NOT NULL,
+  `jam_selesai` varchar(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jurusan`
+--
+
+CREATE TABLE `jurusan` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jurusan`
+--
+
+INSERT INTO `jurusan` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+(2, 'TKJ', '2022-06-06 03:53:10', '2022-06-06 03:53:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kelas`
+--
+
+CREATE TABLE `kelas` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kelas`
+--
+
+INSERT INTO `kelas` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+(2, 'X', '2022-06-06 03:52:41', '2022-06-06 03:52:41'),
+(3, 'XI', '2022-06-06 03:52:49', '2022-06-06 03:52:49'),
+(4, 'XII', '2022-06-06 03:52:57', '2022-06-06 03:52:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kurikulum`
+--
+
+CREATE TABLE `kurikulum` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kurikulum`
+--
+
+INSERT INTO `kurikulum` (`id`, `nama`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'KTSP 2006', 0, '2022-06-06 04:53:38', '2022-06-06 04:54:00'),
+(2, 'K13', 1, '2022-06-06 04:54:00', '2022-06-06 04:54:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mapel`
+--
+
+CREATE TABLE `mapel` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `mapel`
+--
+
+INSERT INTO `mapel` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+(2, 'Bahasa Jawa', '2022-06-06 07:44:43', '2022-06-06 07:44:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_headers`
+--
+
+CREATE TABLE `menu_headers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `num_order` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_headers`
+--
+
+INSERT INTO `menu_headers` (`id`, `name`, `num_order`, `created_at`, `updated_at`) VALUES
+(1, '', 1, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(2, 'Data', 2, '2022-06-06 01:29:55', '2022-06-06 01:29:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_items`
+--
+
+CREATE TABLE `menu_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `menuheader_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `route` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `routeparams` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visible_conditions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active_conditions` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent` int(11) NOT NULL,
+  `num_order` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menu_items`
+--
+
+INSERT INTO `menu_items` (`id`, `menuheader_id`, `name`, `route`, `routeparams`, `icon`, `visible_conditions`, `active_conditions`, `parent`, `num_order`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Dashboard', 'admin.dashboard', '', 'bi-speedometer2', '', 'Request::url() == route(\'admin.dashboard\')', 0, 1, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(2, 2, 'Guru', 'admin.guru.index', '', 'bi-person-plus', '', 'is_int(strpos(Request::url(), route(\'admin.guru.index\'))) && !is_int(strpos(Request::url(), route(\'admin.guru-mapel.index\')))', 0, 1, '2022-06-06 01:37:02', '2022-06-06 01:39:22'),
+(3, 2, 'Siswa', 'admin.siswa.index', '', 'bi-person-dash', '', 'is_int(strpos(Request::url(), route(\'admin.siswa.index\')))', 0, 2, '2022-06-06 01:40:20', '2022-06-06 01:40:20'),
+(4, 2, 'Kelas', 'admin.kelas.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.kelas.index\')))', 0, 3, '2022-06-06 01:56:42', '2022-06-06 01:56:42'),
+(5, 2, 'Jurusan', 'admin.jurusan.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.jurusan.index\')))', 0, 4, '2022-06-06 01:57:11', '2022-06-06 01:57:11'),
+(6, 2, 'Mata Pelajaran', 'admin.mapel.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.mapel.index\')))', 0, 6, '2022-06-06 03:44:45', '2022-06-06 04:12:35'),
+(7, 2, 'Rombel', 'admin.rombel.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.rombel.index\')))', 0, 5, '2022-06-06 04:12:21', '2022-06-06 04:12:35'),
+(8, 2, 'Tahun Akademik', 'admin.tahun-akademik.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.tahun-akademik.index\')))', 0, 7, '2022-06-06 04:22:16', '2022-06-06 04:22:16'),
+(9, 2, 'Kurikulum', 'admin.kurikulum.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.kurikulum.index\')))', 0, 8, '2022-06-06 04:48:54', '2022-06-06 04:48:54'),
+(10, 2, 'Jam Pelajaran', 'admin.jp.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.jp.index\')))', 0, 9, '2022-06-06 05:21:07', '2022-06-06 05:21:07'),
+(11, 2, 'Guru Mata Pelajaran', 'admin.guru-mapel.index', '', 'bi-person-plus', '', 'is_int(strpos(Request::url(), route(\'admin.guru-mapel.index\')))', 0, 10, '2022-06-06 01:37:02', '2022-06-06 01:39:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `metas`
+--
+
+CREATE TABLE `metas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `metas`
+--
+
+INSERT INTO `metas` (`id`, `code`, `content`, `created_at`, `updated_at`) VALUES
+(1, 'description', '', '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(2, 'keywords', '', '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(3, 'author', '', '2022-06-01 04:28:27', '2022-06-01 04:28:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2019_08_19_000000_create_failed_jobs_table', 1),
+(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(5, '2022_01_31_000000_add_columns_to_users_table', 1),
+(6, '2022_01_31_000000_create_menu_headers_table', 1),
+(7, '2022_01_31_000000_create_menu_items_table', 1),
+(8, '2022_01_31_000000_create_metas_table', 1),
+(9, '2022_01_31_000000_create_permissions_table', 1),
+(10, '2022_01_31_000000_create_role__permission_table', 1),
+(11, '2022_01_31_000000_create_roles_table', 1),
+(12, '2022_01_31_000000_create_settings_table', 1),
+(13, '2022_01_31_000000_create_user_attributes_table', 1),
+(14, '2022_02_03_000000_add_columns_to_permissions_table', 1),
+(15, '2022_02_03_000000_create_user_accounts_table', 1),
+(16, '2022_02_03_000000_create_user_avatars_table', 1),
+(17, '2022_02_13_000000_create_visitors_table', 1),
+(18, '2022_02_19_000000_add_columns_to_roles_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `default` int(11) NOT NULL,
+  `num_order` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `name`, `code`, `default`, `num_order`, `created_at`, `updated_at`) VALUES
+(1, 'Mengelola Data Role', 'RoleController::index', 1, 1, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(2, 'Menambah Role', 'RoleController::create', 1, 2, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(3, 'Mengubah Role', 'RoleController::edit', 1, 3, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(4, 'Menghapus Role', 'RoleController::delete', 1, 4, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(5, 'Mengurutkan Role', 'RoleController::reorder', 1, 5, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(6, 'Mengelola Data Hak Akses', 'PermissionController::index', 1, 6, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(7, 'Menambah Hak Akses', 'PermissionController::create', 1, 7, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(8, 'Mengubah Hak Akses', 'PermissionController::edit', 1, 8, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(9, 'Menghapus Hak Akses', 'PermissionController::delete', 1, 9, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(10, 'Mengurutkan Hak Akses', 'PermissionController::reorder', 1, 10, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(11, 'Mengganti Status Hak Akses', 'PermissionController::change', 1, 11, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(12, 'Mengelola Data Menu', 'MenuController::index', 1, 12, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(13, 'Menambah Menu Header', 'MenuHeaderController::create', 1, 13, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(14, 'Mengubah Menu Header', 'MenuHeaderController::edit', 1, 14, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(15, 'Menghapus Menu Header', 'MenuHeaderController::delete', 1, 15, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(16, 'Menambah Menu Item', 'MenuItemController::create', 1, 16, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(17, 'Mengubah Menu Item', 'MenuItemController::edit', 1, 17, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(18, 'Menghapus Menu Item', 'MenuItemController::delete', 1, 18, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(19, 'Mengelola Meta', 'MetaController::index', 1, 19, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(20, 'Menampilkan Lingkungan Sistem', 'SystemController::index', 1, 20, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(21, 'Menampilkan Database', 'DatabaseController::index', 1, 21, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(22, 'Menampilkan Route', 'RouteController::index', 1, 22, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(23, 'Mengelola Perintah Artisan', 'ArtisanController::index', 1, 23, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(24, 'Menampilkan Log Aktivitas', 'LogController::activity', 1, 24, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(25, 'Menampilkan Log Aktivitas Berdasarkan URL', 'LogController::activityByURL', 1, 25, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(26, 'Menampilkan Log Autentikasi', 'LogController::authentication', 1, 26, '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(27, 'Menampilkan Data Visitor', 'VisitorController::index', 1, 27, '2022-06-01 04:28:27', '2022-06-01 04:28:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_admin` int(11) NOT NULL,
+  `is_global` int(11) NOT NULL,
+  `num_order` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `code`, `is_admin`, `is_global`, `num_order`, `created_at`, `updated_at`) VALUES
+(1, 'Super Admin', 'super-admin', 1, 1, 1, '2022-06-01 04:28:26', '2022-06-01 04:28:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role__permission`
+--
+
+CREATE TABLE `role__permission` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `role__permission`
+--
+
+INSERT INTO `role__permission` (`role_id`, `permission_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 10),
+(1, 11),
+(1, 12),
+(1, 13),
+(1, 14),
+(1, 15),
+(1, 16),
+(1, 17),
+(1, 18),
+(1, 19),
+(1, 20),
+(1, 21),
+(1, 22),
+(1, 23),
+(1, 24),
+(1, 25),
+(1, 26),
+(1, 27);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rombel`
+--
+
+CREATE TABLE `rombel` (
+  `id` int(11) NOT NULL,
+  `kelas_id` int(11) NOT NULL,
+  `jurusan_id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rombel`
+--
+
+INSERT INTO `rombel` (`id`, `kelas_id`, `jurusan_id`, `nama`, `created_at`, `updated_at`) VALUES
+(2, 2, 2, 'X TKJ 2', '2022-06-06 03:53:10', '2022-06-06 04:11:28'),
+(3, 2, 2, 'X TKJ 1', '2022-06-06 04:08:50', '2022-06-06 04:08:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `code`, `content`, `created_at`, `updated_at`) VALUES
+(1, 'name', 'SIAKUR', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(2, 'tagline', NULL, '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(3, 'timezone', 'Asia/Jakarta', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(4, 'address', 'H', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(5, 'city', 'H', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(6, 'email', 'admin@admin.com', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(7, 'phone_number', '0', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(8, 'whatsapp', '0', '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(9, 'instagram', NULL, '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(10, 'youtube', NULL, '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(11, 'facebook', NULL, '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(12, 'twitter', NULL, '2022-06-01 04:28:27', '2022-06-06 08:34:12'),
+(13, 'google_maps', '', '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(14, 'google_tag_manager', '', '2022-06-01 04:28:27', '2022-06-01 04:28:27'),
+(15, 'theme', 'default', '2022-06-01 04:28:27', '2022-06-01 04:28:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `siswa`
+--
+
+CREATE TABLE `siswa` (
+  `id` int(11) NOT NULL,
+  `nomor_identitas` varchar(20) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `jenis_kelamin` varchar(8) NOT NULL,
+  `tempat_lahir` varchar(255) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `nomor_telepon` varchar(20) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tahun_akademik`
+--
+
+CREATE TABLE `tahun_akademik` (
+  `id` int(11) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tahun_akademik`
+--
+
+INSERT INTO `tahun_akademik` (`id`, `tahun`, `semester`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2022, 1, 0, '2022-06-06 04:35:56', '2022-06-06 04:40:49'),
+(2, 2022, 2, 1, '2022-06-06 04:40:31', '2022-06-06 04:40:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `access_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `last_visit` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `role_id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `access_token`, `avatar`, `status`, `last_visit`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Admin', 'admin@admin.com', 'admin@admin.com', NULL, '$2y$10$1SIh44UllISnJikI.I7OhOh.ewQXuG1p8T0Rb.kmnHd3Q9b52L.oK', NULL, '2s8209qJw0dJE4KvHOH5FiivK5MnSu9xRjxqC81J', NULL, 1, '2022-06-06 00:18:13', '2022-06-01 04:28:26', '2022-06-06 00:18:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_accounts`
+--
+
+CREATE TABLE `user_accounts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_attributes`
+--
+
+CREATE TABLE `user_attributes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `birthdate` date NOT NULL,
+  `gender` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_code` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dial_code` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_avatars`
+--
+
+CREATE TABLE `user_avatars` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visitors`
+--
+
+CREATE TABLE `visitors` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `ip_address` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `device` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `browser` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `platform` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `user_id`, `ip_address`, `device`, `browser`, `platform`, `location`, `created_at`, `updated_at`) VALUES
+(1, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-01 04:29:32', '2022-06-01 04:29:32'),
+(2, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-06 00:18:21', '2022-06-06 00:18:21');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `guru`
+--
+ALTER TABLE `guru`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `guru_mapel`
+--
+ALTER TABLE `guru_mapel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jp`
+--
+ALTER TABLE `jp`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jurusan`
+--
+ALTER TABLE `jurusan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kelas`
+--
+ALTER TABLE `kelas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kurikulum`
+--
+ALTER TABLE `kurikulum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mapel`
+--
+ALTER TABLE `mapel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu_headers`
+--
+ALTER TABLE `menu_headers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu_items`
+--
+ALTER TABLE `menu_items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `metas`
+--
+ALTER TABLE `metas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rombel`
+--
+ALTER TABLE `rombel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `siswa`
+--
+ALTER TABLE `siswa`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tahun_akademik`
+--
+ALTER TABLE `tahun_akademik`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indexes for table `user_accounts`
+--
+ALTER TABLE `user_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_attributes`
+--
+ALTER TABLE `user_attributes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_avatars`
+--
+ALTER TABLE `user_avatars`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `visitors`
+--
+ALTER TABLE `visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `guru`
+--
+ALTER TABLE `guru`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `guru_mapel`
+--
+ALTER TABLE `guru_mapel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `jp`
+--
+ALTER TABLE `jp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `jurusan`
+--
+ALTER TABLE `jurusan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `kelas`
+--
+ALTER TABLE `kelas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `kurikulum`
+--
+ALTER TABLE `kurikulum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `mapel`
+--
+ALTER TABLE `mapel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `menu_headers`
+--
+ALTER TABLE `menu_headers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `menu_items`
+--
+ALTER TABLE `menu_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `metas`
+--
+ALTER TABLE `metas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `rombel`
+--
+ALTER TABLE `rombel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `siswa`
+--
+ALTER TABLE `siswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tahun_akademik`
+--
+ALTER TABLE `tahun_akademik`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `user_accounts`
+--
+ALTER TABLE `user_accounts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_attributes`
+--
+ALTER TABLE `user_attributes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_avatars`
+--
+ALTER TABLE `user_avatars`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `visitors`
+--
+ALTER TABLE `visitors`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
