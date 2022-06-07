@@ -6,11 +6,11 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Models\Guru;
-use App\Models\GuruMapel;
-use App\Models\Mapel;
+use Ajifatur\Helpers\DateTimeExt;
+use App\Models\MutasiSiswa;
+use App\Models\Siswa;
 
-class GuruMapelController extends Controller
+class MutasiSiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +23,12 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::get();
+        // Mengambil data mutasi siswa
+        $mutasi_siswa = MutasiSiswa::get();
 
         // View
-        return view('admin/guru-mapel/index', [
-            'guru_mapel' => $guru_mapel
+        return view('admin/mutasi-siswa/index', [
+            'mutasi_siswa' => $mutasi_siswa
         ]);
     }
 
@@ -42,16 +42,12 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data mapel
-        $mapel = Mapel::orderBy('nama','asc')->get();
-
-        // Mengambil data guru
-        $guru = Guru::orderBy('nama','asc')->get();
+        // Mengambil data siswa
+        $siswa = Siswa::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/guru-mapel/create', [
-            'mapel' => $mapel,
-            'guru' => $guru
+        return view('admin/mutasi-siswa/create', [
+            'siswa' => $siswa,
         ]);
     }
 
@@ -65,8 +61,9 @@ class GuruMapelController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'mapel' => 'required',
-            'guru' => 'required',
+            'siswa' => 'required',
+            'tujuan' => 'required',
+            'tanggal' => 'required',
         ]);
         
         // Check errors
@@ -75,15 +72,16 @@ class GuruMapelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Simpan guru mapel
-            $guru_mapel = new GuruMapel;
-            $guru_mapel->mapel_id = $request->mapel;
-            $guru_mapel->guru_id = $request->guru;
-            $guru_mapel->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
-            $guru_mapel->save();
+            // Simpan mutasi siswa
+            $mutasi_siswa = new MutasiSiswa;
+            $mutasi_siswa->siswa_id = $request->siswa;
+            $mutasi_siswa->tujuan = $request->tujuan;
+            $mutasi_siswa->tanggal = DateTimeExt::change($request->tanggal);
+            $mutasi_siswa->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
+            $mutasi_siswa->save();
 
             // Redirect
-            return redirect()->route('admin.guru-mapel.index')->with(['message' => 'Berhasil menambah data.']);
+            return redirect()->route('admin.mutasi-siswa.index')->with(['message' => 'Berhasil menambah data.']);
         }
     }
 
@@ -98,20 +96,16 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::findOrFail($id);
+        // Mengambil data mutasi siswa
+        $mutasi_siswa = MutasiSiswa::findOrFail($id);
 
-        // Mengambil data mapel
-        $mapel = Mapel::orderBy('nama','asc')->get();
-
-        // Mengambil data guru
-        $guru = Guru::orderBy('nama','asc')->get();
+        // Mengambil data siswa
+        $siswa = Siswa::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/guru-mapel/edit', [
-            'guru_mapel' => $guru_mapel,
-            'mapel' => $mapel,
-            'guru' => $guru
+        return view('admin/mutasi-siswa/edit', [
+            'mutasi_siswa' => $mutasi_siswa,
+            'siswa' => $siswa,
         ]);
     }
 
@@ -125,8 +119,9 @@ class GuruMapelController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'mapel' => 'required',
-            'guru' => 'required',
+            'siswa' => 'required',
+            'tujuan' => 'required',
+            'tanggal' => 'required',
         ]);
         
         // Check errors
@@ -135,14 +130,15 @@ class GuruMapelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Update data guru mapel
-            $guru_mapel = GuruMapel::find($request->id);
-            $guru_mapel->mapel_id = $request->mapel;
-            $guru_mapel->guru_id = $request->guru;
-            $guru_mapel->save();
+            // Update data mutasi siswa
+            $mutasi_siswa = MutasiSiswa::find($request->id);
+            $mutasi_siswa->siswa_id = $request->siswa;
+            $mutasi_siswa->tujuan = $request->tujuan;
+            $mutasi_siswa->tanggal = DateTimeExt::change($request->tanggal);
+            $mutasi_siswa->save();
 
             // Redirect
-            return redirect()->route('admin.guru-mapel.index')->with(['message' => 'Berhasil mengupdate data.']);
+            return redirect()->route('admin.mutasi-siswa.index')->with(['message' => 'Berhasil mengupdate data.']);
         }
     }
 
@@ -157,13 +153,13 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
         
-        // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::findOrFail($request->id);
+        // Mengambil data mutasi siswa
+        $mutasi_siswa = MutasiSiswa::findOrFail($request->id);
 
-        // Menghapus data guru mapel
-        $guru_mapel->delete();
+        // Menghapus data mutasi siswa
+        $mutasi_siswa->delete();
 
         // Redirect
-        return redirect()->route('admin.guru-mapel.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.mutasi-siswa.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }

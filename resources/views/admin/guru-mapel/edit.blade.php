@@ -57,3 +57,12 @@
 </div>
 
 @endsection
+
+@section('js')
+
+<script type="text/javascript">
+    // Select2
+    Spandiv.Select2("select[name=guru]"); 
+</script>
+
+@endsection

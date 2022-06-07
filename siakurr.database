@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2022 at 02:21 AM
+-- Generation Time: Jun 07, 2022 at 03:35 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -62,7 +62,8 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`id`, `nomor_identitas`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `nomor_telepon`, `alamat`, `foto`, `created_at`, `updated_at`) VALUES
-(2, '12345', 'Ahmad Najib, S.Psi', 'L', 'H', '2020-10-10', '081234567890', 'H', NULL, '2022-06-06 07:45:33', '2022-06-06 07:45:33');
+(2, '12345', 'Ahmad Najib, S.Psi', 'L', 'H', '2020-10-10', '081234567890', 'H', NULL, '2022-06-06 07:45:33', '2022-06-06 07:45:33'),
+(3, '101', 'Arif Widodo, S.Psi', 'L', 'H', '2022-06-07', '081234567890', 'H', NULL, '2022-06-07 01:22:32', '2022-06-07 01:22:32');
 
 -- --------------------------------------------------------
 
@@ -84,7 +85,7 @@ CREATE TABLE `guru_mapel` (
 --
 
 INSERT INTO `guru_mapel` (`id`, `guru_id`, `mapel_id`, `ta_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 2, 0, '2022-06-06 07:45:56', '2022-06-06 07:45:56');
+(3, 2, 2, 2, '2022-06-07 01:02:02', '2022-06-07 01:02:02');
 
 -- --------------------------------------------------------
 
@@ -243,7 +244,9 @@ INSERT INTO `menu_items` (`id`, `menuheader_id`, `name`, `route`, `routeparams`,
 (8, 2, 'Tahun Akademik', 'admin.tahun-akademik.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.tahun-akademik.index\')))', 0, 7, '2022-06-06 04:22:16', '2022-06-06 04:22:16'),
 (9, 2, 'Kurikulum', 'admin.kurikulum.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.kurikulum.index\')))', 0, 8, '2022-06-06 04:48:54', '2022-06-06 04:48:54'),
 (10, 2, 'Jam Pelajaran', 'admin.jp.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.jp.index\')))', 0, 9, '2022-06-06 05:21:07', '2022-06-06 05:21:07'),
-(11, 2, 'Guru Mata Pelajaran', 'admin.guru-mapel.index', '', 'bi-person-plus', '', 'is_int(strpos(Request::url(), route(\'admin.guru-mapel.index\')))', 0, 10, '2022-06-06 01:37:02', '2022-06-06 01:39:22');
+(11, 2, 'Guru Mata Pelajaran', 'admin.guru-mapel.index', '', 'bi-person-plus', '', 'is_int(strpos(Request::url(), route(\'admin.guru-mapel.index\')))', 0, 10, '2022-06-06 01:37:02', '2022-06-06 01:39:22'),
+(12, 2, 'Wali Kelas', 'admin.wali-kelas.index', '', 'bi-alarm', '', 'is_int(strpos(Request::url(), route(\'admin.wali-kelas.index\')))', 0, 11, '2022-06-07 00:40:04', '2022-06-07 00:40:04'),
+(13, 2, 'Mutasi Siswa', 'admin.mutasi-siswa.index', '', 'bi-mic-mute', '', 'is_int(strpos(Request::url(), route(\'admin.mutasi-siswa.index\')))', 0, 12, '2022-06-07 01:14:07', '2022-06-07 01:14:07');
 
 -- --------------------------------------------------------
 
@@ -303,6 +306,30 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2022_02_03_000000_create_user_avatars_table', 1),
 (17, '2022_02_13_000000_create_visitors_table', 1),
 (18, '2022_02_19_000000_add_columns_to_roles_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mutasi_siswa`
+--
+
+CREATE TABLE `mutasi_siswa` (
+  `id` int(11) NOT NULL,
+  `siswa_id` int(11) NOT NULL,
+  `tujuan` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `ta_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `mutasi_siswa`
+--
+
+INSERT INTO `mutasi_siswa` (`id`, `siswa_id`, `tujuan`, `tanggal`, `ta_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 'SMK Kalimantan', '2022-06-07', 2, '2022-06-07 01:20:37', '2022-06-07 01:33:50'),
+(2, 3, 'SMK Jabingan', '2022-06-06', 2, '2022-06-07 01:34:18', '2022-06-07 01:34:36');
 
 -- --------------------------------------------------------
 
@@ -529,6 +556,14 @@ CREATE TABLE `siswa` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `siswa`
+--
+
+INSERT INTO `siswa` (`id`, `nomor_identitas`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `nomor_telepon`, `alamat`, `foto`, `created_at`, `updated_at`) VALUES
+(2, '001', 'Klunteng', 'L', 'Solo', '2022-06-07', '081234567890', 'Solo', NULL, '2022-06-07 01:18:29', '2022-06-07 01:18:29'),
+(3, '002', 'Samidi', 'L', 'Banjarnegara', '2022-06-07', '081234567890', 'Banjarnegara', NULL, '2022-06-07 01:19:01', '2022-06-07 01:19:01');
+
 -- --------------------------------------------------------
 
 --
@@ -580,7 +615,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `access_token`, `avatar`, `status`, `last_visit`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin@admin.com', 'admin@admin.com', NULL, '$2y$10$1SIh44UllISnJikI.I7OhOh.ewQXuG1p8T0Rb.kmnHd3Q9b52L.oK', NULL, '2s8209qJw0dJE4KvHOH5FiivK5MnSu9xRjxqC81J', NULL, 1, '2022-06-06 00:18:13', '2022-06-01 04:28:26', '2022-06-06 00:18:13');
+(1, 1, 'Admin', 'admin@admin.com', 'admin@admin.com', NULL, '$2y$10$1SIh44UllISnJikI.I7OhOh.ewQXuG1p8T0Rb.kmnHd3Q9b52L.oK', NULL, '2s8209qJw0dJE4KvHOH5FiivK5MnSu9xRjxqC81J', NULL, 1, '2022-06-07 00:38:37', '2022-06-01 04:28:26', '2022-06-07 00:38:37');
 
 -- --------------------------------------------------------
 
@@ -653,7 +688,30 @@ CREATE TABLE `visitors` (
 
 INSERT INTO `visitors` (`id`, `user_id`, `ip_address`, `device`, `browser`, `platform`, `location`, `created_at`, `updated_at`) VALUES
 (1, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-01 04:29:32', '2022-06-01 04:29:32'),
-(2, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-06 00:18:21', '2022-06-06 00:18:21');
+(2, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-06 00:18:21', '2022-06-06 00:18:21'),
+(3, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-07 00:38:55', '2022-06-07 00:38:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wali_kelas`
+--
+
+CREATE TABLE `wali_kelas` (
+  `id` int(11) NOT NULL,
+  `guru_id` int(11) NOT NULL,
+  `rombel_id` int(11) NOT NULL,
+  `ta_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `wali_kelas`
+--
+
+INSERT INTO `wali_kelas` (`id`, `guru_id`, `rombel_id`, `ta_id`, `created_at`, `updated_at`) VALUES
+(3, 3, 3, 2, '2022-06-07 01:23:36', '2022-06-07 01:31:32');
 
 --
 -- Indexes for dumped tables
@@ -730,6 +788,12 @@ ALTER TABLE `metas`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mutasi_siswa`
+--
+ALTER TABLE `mutasi_siswa`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -814,6 +878,12 @@ ALTER TABLE `visitors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `wali_kelas`
+--
+ALTER TABLE `wali_kelas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -827,13 +897,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `guru_mapel`
 --
 ALTER TABLE `guru_mapel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `jp`
@@ -875,7 +945,7 @@ ALTER TABLE `menu_headers`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `metas`
@@ -888,6 +958,12 @@ ALTER TABLE `metas`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `mutasi_siswa`
+--
+ALTER TABLE `mutasi_siswa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -923,7 +999,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tahun_akademik`
@@ -959,7 +1035,13 @@ ALTER TABLE `user_avatars`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `wali_kelas`
+--
+ALTER TABLE `wali_kelas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

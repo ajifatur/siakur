@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Guru;
-use App\Models\GuruMapel;
-use App\Models\Mapel;
+use App\Models\Rombel;
+use App\Models\WaliKelas;
 
-class GuruMapelController extends Controller
+class WaliKelasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +23,12 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::get();
+        // Mengambil data wali kelas
+        $wali_kelas = WaliKelas::get();
 
         // View
-        return view('admin/guru-mapel/index', [
-            'guru_mapel' => $guru_mapel
+        return view('admin/wali-kelas/index', [
+            'wali_kelas' => $wali_kelas
         ]);
     }
 
@@ -42,15 +42,15 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data mapel
-        $mapel = Mapel::orderBy('nama','asc')->get();
+        // Mengambil data rombel
+        $rombel = Rombel::orderBy('nama','asc')->get();
 
         // Mengambil data guru
         $guru = Guru::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/guru-mapel/create', [
-            'mapel' => $mapel,
+        return view('admin/wali-kelas/create', [
+            'rombel' => $rombel,
             'guru' => $guru
         ]);
     }
@@ -65,7 +65,7 @@ class GuruMapelController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'mapel' => 'required',
+            'rombel' => 'required',
             'guru' => 'required',
         ]);
         
@@ -75,15 +75,15 @@ class GuruMapelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Simpan guru mapel
-            $guru_mapel = new GuruMapel;
-            $guru_mapel->mapel_id = $request->mapel;
-            $guru_mapel->guru_id = $request->guru;
-            $guru_mapel->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
-            $guru_mapel->save();
+            // Simpan wali kelas
+            $wali_kelas = new WaliKelas;
+            $wali_kelas->rombel_id = $request->rombel;
+            $wali_kelas->guru_id = $request->guru;
+            $wali_kelas->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
+            $wali_kelas->save();
 
             // Redirect
-            return redirect()->route('admin.guru-mapel.index')->with(['message' => 'Berhasil menambah data.']);
+            return redirect()->route('admin.wali-kelas.index')->with(['message' => 'Berhasil menambah data.']);
         }
     }
 
@@ -98,19 +98,19 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::findOrFail($id);
+        // Mengambil data wali kelas
+        $wali_kelas = WaliKelas::findOrFail($id);
 
-        // Mengambil data mapel
-        $mapel = Mapel::orderBy('nama','asc')->get();
+        // Mengambil data rombel
+        $rombel = Rombel::orderBy('nama','asc')->get();
 
         // Mengambil data guru
         $guru = Guru::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/guru-mapel/edit', [
-            'guru_mapel' => $guru_mapel,
-            'mapel' => $mapel,
+        return view('admin/wali-kelas/edit', [
+            'wali_kelas' => $wali_kelas,
+            'rombel' => $rombel,
             'guru' => $guru
         ]);
     }
@@ -125,7 +125,7 @@ class GuruMapelController extends Controller
     {
         // Validation
         $validator = Validator::make($request->all(), [
-            'mapel' => 'required',
+            'rombel' => 'required',
             'guru' => 'required',
         ]);
         
@@ -135,14 +135,14 @@ class GuruMapelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Update data guru mapel
-            $guru_mapel = GuruMapel::find($request->id);
-            $guru_mapel->mapel_id = $request->mapel;
-            $guru_mapel->guru_id = $request->guru;
-            $guru_mapel->save();
+            // Update data wali kelas
+            $wali_kelas = WaliKelas::find($request->id);
+            $wali_kelas->rombel_id = $request->rombel;
+            $wali_kelas->guru_id = $request->guru;
+            $wali_kelas->save();
 
             // Redirect
-            return redirect()->route('admin.guru-mapel.index')->with(['message' => 'Berhasil mengupdate data.']);
+            return redirect()->route('admin.wali-kelas.index')->with(['message' => 'Berhasil mengupdate data.']);
         }
     }
 
@@ -157,13 +157,13 @@ class GuruMapelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
         
-        // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::findOrFail($request->id);
+        // Mengambil data wali kelas
+        $wali_kelas = WaliKelas::findOrFail($request->id);
 
-        // Menghapus data guru mapel
-        $guru_mapel->delete();
+        // Menghapus data wali kelas
+        $wali_kelas->delete();
 
         // Redirect
-        return redirect()->route('admin.guru-mapel.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.wali-kelas.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }

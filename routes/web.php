@@ -97,6 +97,22 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/guru-mapel/edit/{id}', 'GuruMapelController@edit')->name('admin.guru-mapel.edit');
     Route::post('/admin/guru-mapel/update', 'GuruMapelController@update')->name('admin.guru-mapel.update');
     Route::post('/admin/guru-mapel/delete', 'GuruMapelController@delete')->name('admin.guru-mapel.delete');
+    
+    // Wali Kelas
+    Route::get('/admin/wali-kelas', 'WaliKelasController@index')->name('admin.wali-kelas.index');
+    Route::get('/admin/wali-kelas/create', 'WaliKelasController@create')->name('admin.wali-kelas.create');
+    Route::post('/admin/wali-kelas/store', 'WaliKelasController@store')->name('admin.wali-kelas.store');
+    Route::get('/admin/wali-kelas/edit/{id}', 'WaliKelasController@edit')->name('admin.wali-kelas.edit');
+    Route::post('/admin/wali-kelas/update', 'WaliKelasController@update')->name('admin.wali-kelas.update');
+    Route::post('/admin/wali-kelas/delete', 'WaliKelasController@delete')->name('admin.wali-kelas.delete');
+    
+    // Mutasi Siswa
+    Route::get('/admin/mutasi-siswa', 'MutasiSiswaController@index')->name('admin.mutasi-siswa.index');
+    Route::get('/admin/mutasi-siswa/create', 'MutasiSiswaController@create')->name('admin.mutasi-siswa.create');
+    Route::post('/admin/mutasi-siswa/store', 'MutasiSiswaController@store')->name('admin.mutasi-siswa.store');
+    Route::get('/admin/mutasi-siswa/edit/{id}', 'MutasiSiswaController@edit')->name('admin.mutasi-siswa.edit');
+    Route::post('/admin/mutasi-siswa/update', 'MutasiSiswaController@update')->name('admin.mutasi-siswa.update');
+    Route::post('/admin/mutasi-siswa/delete', 'MutasiSiswaController@delete')->name('admin.mutasi-siswa.delete');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();
