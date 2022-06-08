@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->route('auth.login');
 });
 
 Route::group(['middleware' => ['faturhelper.admin']], function() {
@@ -116,6 +117,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     
     // Jadwal
     Route::get('/admin/jadwal', 'JadwalController@index')->name('admin.jadwal.index');
+    Route::post('/admin/jadwal/store', 'JadwalController@store')->name('admin.jadwal.store');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();

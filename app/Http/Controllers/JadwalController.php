@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 // use App\Models\Jadwal;
 use App\Models\JP;
 use App\Models\Rombel;
+use App\Models\GuruMapel;
 
 class JadwalController extends Controller
 {
@@ -29,10 +30,14 @@ class JadwalController extends Controller
         // Mengambil data rombel
         $rombel = Rombel::orderBy('nama','asc')->get();
 
+        // Mengambil data guru mapel
+        $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
+
         // View
         return view('admin/jadwal/index', [
             'jp' => $jp,
             'rombel' => $rombel,
+            'guru_mapel' => $guru_mapel,
         ]);
     }
 

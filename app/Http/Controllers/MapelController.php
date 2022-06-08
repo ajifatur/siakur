@@ -55,6 +55,7 @@ class MapelController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'nama' => 'required|max:200',
+            'kode' => 'required',
         ]);
         
         // Check errors
@@ -66,6 +67,7 @@ class MapelController extends Controller
             // Simpan mapel
             $mapel = new Mapel;
             $mapel->nama = $request->nama;
+            $mapel->kode = $request->kode;
             $mapel->save();
 
             // Redirect
@@ -104,6 +106,7 @@ class MapelController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'nama' => 'required|max:200',
+            'kode' => 'required'
         ]);
         
         // Check errors
@@ -115,6 +118,7 @@ class MapelController extends Controller
             // Update data mapel
             $mapel = Mapel::find($request->id);
             $mapel->nama = $request->nama;
+            $mapel->kode = $request->kode;
             $mapel->save();
 
             // Redirect
