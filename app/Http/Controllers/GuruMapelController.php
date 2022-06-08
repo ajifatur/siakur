@@ -24,7 +24,7 @@ class GuruMapelController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::get();
+        $guru_mapel = GuruMapel::where('ta_id','=',session()->get('taa'))->get();
 
         // View
         return view('admin/guru-mapel/index', [

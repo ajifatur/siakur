@@ -24,7 +24,7 @@ class MutasiSiswaController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data mutasi siswa
-        $mutasi_siswa = MutasiSiswa::get();
+        $mutasi_siswa = MutasiSiswa::where('ta_id','=',session()->get('taa'))->get();
 
         // View
         return view('admin/mutasi-siswa/index', [

@@ -24,7 +24,7 @@ class WaliKelasController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data wali kelas
-        $wali_kelas = WaliKelas::get();
+        $wali_kelas = WaliKelas::where('ta_id','=',session()->get('taa'))->get();
 
         // View
         return view('admin/wali-kelas/index', [

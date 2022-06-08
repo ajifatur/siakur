@@ -174,4 +174,11 @@ class TahunAkademikController extends Controller
         // Redirect
         return redirect()->route('admin.tahun-akademik.index')->with(['message' => 'Berhasil menghapus data.']);
     }
+
+    // Update session
+    public function updateSession(Request $request)
+    {
+        session()->put('taa', $request->taa);
+        return redirect()->back();
+    }
 }

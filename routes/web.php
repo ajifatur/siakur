@@ -19,6 +19,9 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['faturhelper.admin']], function() {
+    // Update Session
+    Route::post('/admin/update-session', 'TahunAkademikController@updateSession')->name('admin.update-session');
+
     // Guru
     Route::get('/admin/guru', 'GuruController@index')->name('admin.guru.index');
     Route::get('/admin/guru/create', 'GuruController@create')->name('admin.guru.create');
@@ -118,6 +121,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     // Jadwal
     Route::get('/admin/jadwal', 'JadwalController@index')->name('admin.jadwal.index');
     Route::post('/admin/jadwal/store', 'JadwalController@store')->name('admin.jadwal.store');
+    Route::post('/admin/jadwal/delete', 'JadwalController@delete')->name('admin.jadwal.delete');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();

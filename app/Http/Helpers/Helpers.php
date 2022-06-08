@@ -9,6 +9,13 @@ if(!function_exists('tahun_akademik')) {
     }
 }
 
+if(!function_exists('tahun_akademik_all')) {
+    function tahun_akademik_all() {
+        $tahun_akademik = TahunAkademik::orderBy('status','desc')->get();
+        return $tahun_akademik;
+    }
+}
+
 if(!function_exists('hari')) {
     function hari($num = 0) {
         $array = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];

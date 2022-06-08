@@ -10,4 +10,10 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    function __construct()
+    {
+        if(session()->get('taa') == null)
+            session()->put('taa', tahun_akademik()->id);
+    }
 }

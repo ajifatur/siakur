@@ -4,6 +4,8 @@
 
 @section('content')
 
+@include('admin/partials/tahun-akademik')
+
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-2 mb-sm-0">Kelola Guru Mata Pelajaran</h1>
     <div class="btn-group">
