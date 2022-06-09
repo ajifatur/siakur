@@ -19,7 +19,7 @@
                             <select name="siswa" class="form-select form-select-sm {{ $errors->has('siswa') ? 'border-danger' : '' }}">
                                 <option value="" disabled selected>--Pilih--</option>
                                 @foreach($siswa as $s)
-                                <option value="{{ $s->id }}" {{ old('siswa') == $s->id ? 'selected' : '' }}>{{ $s->nama }}</option>
+                                <option value="{{ $s->id }}" {{ old('siswa') == $s->id ? 'selected' : '' }}>{{ $s->nomor_identitas }} - {{ $s->nama }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('siswa'))

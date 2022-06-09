@@ -58,9 +58,14 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/rombel', 'RombelController@index')->name('admin.rombel.index');
     Route::get('/admin/rombel/create', 'RombelController@create')->name('admin.rombel.create');
     Route::post('/admin/rombel/store', 'RombelController@store')->name('admin.rombel.store');
+    Route::get('/admin/rombel/detail/{id}', 'RombelController@detail')->name('admin.rombel.detail');
     Route::get('/admin/rombel/edit/{id}', 'RombelController@edit')->name('admin.rombel.edit');
     Route::post('/admin/rombel/update', 'RombelController@update')->name('admin.rombel.update');
     Route::post('/admin/rombel/delete', 'RombelController@delete')->name('admin.rombel.delete');
+    Route::get('/admin/rombel/detail/{id}/create', 'AnggotaRombelController@create')->name('admin.anggota-rombel.create');
+    Route::post('/admin/rombel/store/anggota', 'AnggotaRombelController@store')->name('admin.anggota-rombel.store');
+    Route::post('/admin/rombel/store/delete', 'AnggotaRombelController@delete')->name('admin.anggota-rombel.delete');
+    Route::post('/admin/rombel/store/sort', 'AnggotaRombelController@sort')->name('admin.anggota-rombel.sort');
 
     // Mapel
     Route::get('/admin/mapel', 'MapelController@index')->name('admin.mapel.index');
@@ -93,6 +98,14 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/jp/edit/{id}', 'JPController@edit')->name('admin.jp.edit');
     Route::post('/admin/jp/update', 'JPController@update')->name('admin.jp.update');
     Route::post('/admin/jp/delete', 'JPController@delete')->name('admin.jp.delete');
+
+    // KKM
+    Route::get('/admin/kkm', 'KKMController@index')->name('admin.kkm.index');
+    Route::get('/admin/kkm/create', 'KKMController@create')->name('admin.kkm.create');
+    Route::post('/admin/kkm/store', 'KKMController@store')->name('admin.kkm.store');
+    Route::get('/admin/kkm/edit/{id}', 'KKMController@edit')->name('admin.kkm.edit');
+    Route::post('/admin/kkm/update', 'KKMController@update')->name('admin.kkm.update');
+    Route::post('/admin/kkm/delete', 'KKMController@delete')->name('admin.kkm.delete');
 
     // Guru Mapel
     Route::get('/admin/guru-mapel', 'GuruMapelController@index')->name('admin.guru-mapel.index');

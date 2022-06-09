@@ -43,7 +43,7 @@ class MutasiSiswaController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data siswa
-        $siswa = Siswa::orderBy('nama','asc')->get();
+        $siswa = Siswa::orderBy('nomor_identitas','asc')->get();
 
         // View
         return view('admin/mutasi-siswa/create', [
@@ -100,7 +100,7 @@ class MutasiSiswaController extends Controller
         $mutasi_siswa = MutasiSiswa::findOrFail($id);
 
         // Mengambil data siswa
-        $siswa = Siswa::orderBy('nama','asc')->get();
+        $siswa = Siswa::orderBy('nomor_identitas','asc')->get();
 
         // View
         return view('admin/mutasi-siswa/edit', [

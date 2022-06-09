@@ -1,13 +1,15 @@
 @extends('faturhelper::layouts/admin/main')
 
-@section('title', 'Kelola Rombel')
+@section('title', 'Kelola KKM')
 
 @section('content')
 
+@include('admin/partials/tahun-akademik')
+
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-2 mb-sm-0">Kelola Rombel</h1>
+    <h1 class="h3 mb-2 mb-sm-0">Kelola KKM</h1>
     <div class="btn-group">
-        <a href="{{ route('admin.rombel.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Rombel</a>
+        <a href="{{ route('admin.kkm.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah KKM</a>
     </div>
 </div>
 <div class="row">
@@ -25,24 +27,25 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
-                                <th>Nama</th>
                                 <th width="100">Kelas</th>
-                                <th width="100">Jurusan</th>
+                                <th>Mata Pelajaran</th>
+                                <th width="100">Jenis</th>
+                                <th width="60">KKM</th>
                                 <th width="60">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($rombel as $r)
+                            @foreach($kkm as $k)
                             <tr>
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
-                                <td>{{ $r->nama }}</td>
-                                <td>{{ $r->kelas ? $r->kelas->nama : '-' }}</td>
-                                <td>{{ $r->jurusan ? $r->jurusan->nama : '-' }}</td>
+                                <td>{{ $k->kelas ? $k->kelas->nama : '-' }}</td>
+                                <td>{{ $k->mapel ? $k->mapel->nama : '-' }}</td>
+                                <td>{{ $k->jenis == 1 ? 'Pengetahuan' : 'Keterampilan' }}</td>
+                                <td>{{ $k->kkm }}</td>
                                 <td align="center">
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.rombel.detail', ['id' => $r->id]) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Lihat Anggota"><i class="bi-person"></i></a>
-                                        <a href="{{ route('admin.rombel.edit', ['id' => $r->id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit"><i class="bi-pencil"></i></a>
-                                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $r->id }}" data-bs-toggle="tooltip" title="Hapus"><i class="bi-trash"></i></a>
+                                        <a href="{{ route('admin.kkm.edit', ['id' => $k->id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit"><i class="bi-pencil"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $k->id }}" data-bs-toggle="tooltip" title="Hapus"><i class="bi-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -55,7 +58,7 @@
 	</div>
 </div>
 
-<form class="form-delete d-none" method="post" action="{{ route('admin.rombel.delete') }}">
+<form class="form-delete d-none" method="post" action="{{ route('admin.kkm.delete') }}">
     @csrf
     <input type="hidden" name="id">
 </form>

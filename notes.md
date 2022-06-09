@@ -1,5 +1,4 @@
 ### Akun Admin
-URL: localhost:8000/admin
 Username: admin@admin.com
 Password: password
 
@@ -14,6 +13,10 @@ Password: password
 ### Progress
 - Akses admin
 - CRUD guru, siswa, master
+- Jadwal
+- Guru mapel
+- Wali kelas
+- Mutasi siswa
 
 
 ### Delayed
@@ -23,5 +26,4 @@ Password: password
 
 ### Issue
 - Tampilan halaman login
-- Penanda tahun akademik aktif di setiap halaman
 - Kaldick

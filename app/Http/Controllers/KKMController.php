@@ -6,12 +6,11 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\Models\AnggotaRombel;
-use App\Models\Jurusan;
 use App\Models\Kelas;
-use App\Models\Rombel;
+use App\Models\KKM;
+use App\Models\Mapel;
 
-class RombelController extends Controller
+class KKMController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,12 +23,12 @@ class RombelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data rombel
-        $rombel = Rombel::orderBy('nama','asc')->get();
+        // Mengambil data KKM
+        $kkm = KKM::where('ta_id','=',session()->get('taa'))->get();
 
         // View
-        return view('admin/rombel/index', [
-            'rombel' => $rombel
+        return view('admin/kkm/index', [
+            'kkm' => $kkm
         ]);
     }
 
@@ -46,13 +45,13 @@ class RombelController extends Controller
         // Mengambil data kelas
         $kelas = Kelas::orderBy('nama','asc')->get();
 
-        // Mengambil data jurusan
-        $jurusan = Jurusan::orderBy('nama','asc')->get();
+        // Mengambil data mapel
+        $mapel = Mapel::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/rombel/create', [
+        return view('admin/kkm/create', [
             'kelas' => $kelas,
-            'jurusan' => $jurusan
+            'mapel' => $mapel,
         ]);
     }
 
@@ -67,8 +66,13 @@ class RombelController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'kelas' => 'required',
-            'jurusan' => 'required',
-            'nama' => 'required|max:200',
+            'mapel' => 'required',
+            'jenis' => 'required',
+            'kkm' => 'required',
+            'deskripsi_a' => 'required',
+            'deskripsi_b' => 'required',
+            'deskripsi_c' => 'required',
+            'deskripsi_d' => 'required',
         ]);
         
         // Check errors
@@ -77,40 +81,22 @@ class RombelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Simpan rombel
-            $rombel = new Rombel;
-            $rombel->kelas_id = $request->kelas;
-            $rombel->jurusan_id = $request->jurusan;
-            $rombel->nama = $request->nama;
-            $rombel->save();
+            // Simpan KKM
+            $kkm = new KKM;
+            $kkm->kelas_id = $request->kelas;
+            $kkm->mapel_id = $request->mapel;
+            $kkm->jenis = $request->jenis;
+            $kkm->kkm = $request->kkm;
+            $kkm->deskripsi_a = $request->deskripsi_a;
+            $kkm->deskripsi_b = $request->deskripsi_b;
+            $kkm->deskripsi_c = $request->deskripsi_c;
+            $kkm->deskripsi_d = $request->deskripsi_d;
+            $kkm->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
+            $kkm->save();
 
             // Redirect
-            return redirect()->route('admin.rombel.index')->with(['message' => 'Berhasil menambah data.']);
+            return redirect()->route('admin.kkm.index')->with(['message' => 'Berhasil menambah data.']);
         }
-    }
-
-    /**
-     * Show the detail from the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function detail($id)
-    {
-        // Check the access
-        // has_access(method(__METHOD__), Auth::user()->role_id);
-
-        // Mengambil data rombel
-        $rombel = Rombel::findOrFail($id);
-
-        // Mengambil data anggota rombel
-        $anggota_rombel = AnggotaRombel::where('rombel_id','=',$rombel->id)->where('ta_id','=',session()->get('taa'))->orderby('no_urut','asc')->get();
-
-        // View
-        return view('admin/rombel/detail', [
-            'rombel' => $rombel,
-            'anggota_rombel' => $anggota_rombel,
-        ]);
     }
 
     /**
@@ -124,20 +110,20 @@ class RombelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data rombel
-        $rombel = Rombel::findOrFail($id);
+        // Mengambil data KKM
+        $kkm = KKM::findOrFail($id);
 
         // Mengambil data kelas
         $kelas = Kelas::orderBy('nama','asc')->get();
 
-        // Mengambil data jurusan
-        $jurusan = Jurusan::orderBy('nama','asc')->get();
+        // Mengambil data mapel
+        $mapel = Mapel::orderBy('nama','asc')->get();
 
         // View
-        return view('admin/rombel/edit', [
-            'rombel' => $rombel,
+        return view('admin/kkm/edit', [
+            'kkm' => $kkm,
             'kelas' => $kelas,
-            'jurusan' => $jurusan,
+            'mapel' => $mapel,
         ]);
     }
 
@@ -152,8 +138,13 @@ class RombelController extends Controller
         // Validation
         $validator = Validator::make($request->all(), [
             'kelas' => 'required',
-            'jurusan' => 'required',
-            'nama' => 'required|max:200',
+            'mapel' => 'required',
+            'jenis' => 'required',
+            'kkm' => 'required',
+            'deskripsi_a' => 'required',
+            'deskripsi_b' => 'required',
+            'deskripsi_c' => 'required',
+            'deskripsi_d' => 'required',
         ]);
         
         // Check errors
@@ -162,15 +153,20 @@ class RombelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
-            // Update data rombel
-            $rombel = Rombel::find($request->id);
-            $rombel->kelas_id = $request->kelas;
-            $rombel->jurusan_id = $request->jurusan;
-            $rombel->nama = $request->nama;
-            $rombel->save();
+            // Update data KKM
+            $kkm = KKM::find($request->id);
+            $kkm->kelas_id = $request->kelas;
+            $kkm->mapel_id = $request->mapel;
+            $kkm->jenis = $request->jenis;
+            $kkm->kkm = $request->kkm;
+            $kkm->deskripsi_a = $request->deskripsi_a;
+            $kkm->deskripsi_b = $request->deskripsi_b;
+            $kkm->deskripsi_c = $request->deskripsi_c;
+            $kkm->deskripsi_d = $request->deskripsi_d;
+            $kkm->save();
 
             // Redirect
-            return redirect()->route('admin.rombel.index')->with(['message' => 'Berhasil mengupdate data.']);
+            return redirect()->route('admin.kkm.index')->with(['message' => 'Berhasil mengupdate data.']);
         }
     }
 
@@ -185,13 +181,13 @@ class RombelController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
         
-        // Mengambil data rombel
-        $rombel = Rombel::find($request->id);
+        // Mengambil data KKM
+        $kkm = KKM::find($request->id);
 
-        // Menghapus data rombel
-        $rombel->delete();
+        // Menghapus data KKM
+        $kkm->delete();
 
         // Redirect
-        return redirect()->route('admin.rombel.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.kkm.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }
