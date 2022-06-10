@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\Helpers\DateTimeExt;
-use App\Models\Guru;
+use App\Models\Jadwal;
 use App\Models\User;
 
-class GuruController extends Controller
+class NilaiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,13 +23,19 @@ class GuruController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        // Mengambil data guru
-        $guru = Guru::orderBy('nama','asc')->get();
+        if(Auth::user()->role_id == role('guru')) {
+            // Mengambil data guru mapel
+            $guru_mapel = Auth::user()->guru->guru_mapel;
 
-        // View
-        return view('admin/guru/index', [
-            'guru' => $guru
-        ]);
+            // Mengambil data jadwal
+            $jadwal = Jadwal::has('rombel')->whereIn('gurumapel_id',$guru_mapel->pluck('id')->toArray())->where('ta_id','=',session()->get('taa'))->groupBy('rombel_id')->get();
+
+            // View
+            return view('admin/nilai/index', [
+                'guru_mapel' => $guru_mapel,
+                'jadwal' => $jadwal,
+            ]);
+        }
     }
 
     /**

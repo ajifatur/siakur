@@ -41,4 +41,12 @@ class User extends \Ajifatur\FaturHelper\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Guru.
+     */
+    public function guru()
+    {
+        return $this->hasOne(Guru::class);
+    }
 }
