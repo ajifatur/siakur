@@ -100,13 +100,6 @@ class NilaiController extends Controller
         $nilai->nilai = $request->nilai;
         $nilai->save();
 
-        // Menghitung jumlah nilai
-        // $ulangan = ['UH 1', 'UH 2', 'UH 3', 'UTS', 'UAS'];
-        // $total = 0;
-        // foreach($ulangan as $u) {
-        //     $total += nilai($request->siswa, $request->gurumapel, $request->jenis, $u);
-        // }
-
         // Return
         return response()->json([
             'nilai' => $nilai->nilai,

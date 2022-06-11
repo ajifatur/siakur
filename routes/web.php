@@ -140,6 +140,10 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/nilai', 'NilaiController@index')->name('admin.nilai.index');
     Route::get('/admin/nilai/set/{gurumapel_id}/{rombel_id}', 'NilaiController@set')->name('admin.nilai.set');
     Route::post('/admin/nilai/store', 'NilaiController@store')->name('admin.nilai.store');
+
+    // Identitas Sekolah
+    Route::get('/admin/sekolah', 'SekolahController@index')->name('admin.sekolah.index');
+    Route::post('/admin/sekolah/store', 'SekolahController@store')->name('admin.sekolah.store');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();

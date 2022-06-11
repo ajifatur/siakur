@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2022 at 08:34 AM
+-- Generation Time: Jun 11, 2022 at 05:02 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -346,7 +346,8 @@ INSERT INTO `menu_items` (`id`, `menuheader_id`, `name`, `route`, `routeparams`,
 (14, 2, 'Master', '', '', 'bi-list', 'Auth::user()->role_id == role(\'super-admin\')', 'is_int(strpos(Request::url(), route(\'admin.kelas.index\'))) || is_int(strpos(Request::url(), route(\'admin.jurusan.index\'))) || is_int(strpos(Request::url(), route(\'admin.rombel.index\'))) || is_int(strpos(Request::url(), route(\'admin.mapel.index\'))) || is_int(strpos(Request::url(), route(\'admin.tahun-akademik.index\'))) || is_int(strpos(Request::url(), route(\'admin.kurikulum.index\'))) || is_int(strpos(Request::url(), route(\'admin.jp.index\'))) || is_int(strpos(Request::url(), route(\'admin.kkm.index\')))', 0, 3, '2022-06-07 06:41:37', '2022-06-07 06:42:33'),
 (15, 2, 'Jadwal', 'admin.jadwal.index', '', 'bi-calendar2', 'Auth::user()->role_id == role(\'super-admin\')', 'is_int(strpos(Request::url(), route(\'admin.jadwal.index\')))', 0, 4, '2022-06-07 08:36:13', '2022-06-07 08:36:24'),
 (16, 2, 'KKM', 'admin.kkm.index', '', 'bi-circle', 'Auth::user()->role_id == role(\'super-admin\')', 'is_int(strpos(Request::url(), route(\'admin.kkm.index\')))', 14, 7, '2022-06-09 01:18:47', '2022-06-09 01:20:07'),
-(17, 2, 'Nilai', 'admin.nilai.index', '', 'bi-star', 'Auth::user()->role_id == role(\'guru\')', 'is_int(strpos(Request::url(), route(\'admin.nilai.index\')))', 0, 9, '2022-06-10 06:25:08', '2022-06-10 06:25:08');
+(17, 2, 'Nilai', 'admin.nilai.index', '', 'bi-star', 'Auth::user()->role_id == role(\'guru\')', 'is_int(strpos(Request::url(), route(\'admin.nilai.index\')))', 0, 9, '2022-06-10 06:25:08', '2022-06-10 06:25:08'),
+(18, 2, 'Identitas Sekolah', 'admin.sekolah.index', '', 'bi-building', 'Auth::user()->role_id == role(\'super-admin\')', 'is_int(strpos(Request::url(), route(\'admin.sekolah.index\')))', 0, 10, '2022-06-11 14:59:51', '2022-06-11 14:59:51');
 
 -- --------------------------------------------------------
 
@@ -430,6 +431,40 @@ CREATE TABLE `mutasi_siswa` (
 INSERT INTO `mutasi_siswa` (`id`, `siswa_id`, `tujuan`, `tanggal`, `ta_id`, `created_at`, `updated_at`) VALUES
 (1, 2, 'SMK Kalimantan', '2022-06-07', 2, '2022-06-07 01:20:37', '2022-06-07 01:33:50'),
 (2, 3, 'SMK Jabingan', '2022-06-06', 2, '2022-06-07 01:34:18', '2022-06-07 01:34:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nilai`
+--
+
+CREATE TABLE `nilai` (
+  `id` int(11) NOT NULL,
+  `siswa_id` int(11) NOT NULL,
+  `gurumapel_id` int(11) NOT NULL,
+  `ta_id` int(11) NOT NULL,
+  `jenis` int(11) NOT NULL,
+  `ulangan` varchar(8) NOT NULL,
+  `nilai` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`id`, `siswa_id`, `gurumapel_id`, `ta_id`, `jenis`, `ulangan`, `nilai`, `created_at`, `updated_at`) VALUES
+(1, 3, 3, 2, 1, 'UH 1', 90, '2022-06-11 14:16:36', '2022-06-11 14:16:36'),
+(2, 3, 3, 2, 1, 'UH 2', 90, '2022-06-11 14:18:27', '2022-06-11 14:27:49'),
+(3, 3, 3, 2, 1, 'UH 3', 60, '2022-06-11 14:29:24', '2022-06-11 14:29:24'),
+(4, 3, 3, 2, 1, 'UTS', 80, '2022-06-11 14:30:21', '2022-06-11 14:30:21'),
+(5, 3, 3, 2, 1, 'UAS', 70, '2022-06-11 14:30:26', '2022-06-11 14:30:26'),
+(6, 3, 3, 2, 2, 'UH 1', 100, '2022-06-11 14:32:05', '2022-06-11 14:32:05'),
+(7, 3, 3, 2, 2, 'UH 2', 80, '2022-06-11 14:32:08', '2022-06-11 14:32:08'),
+(8, 3, 3, 2, 2, 'UH 3', 50, '2022-06-11 14:32:10', '2022-06-11 14:32:10'),
+(9, 3, 3, 2, 2, 'UTS', 70, '2022-06-11 14:32:15', '2022-06-11 14:32:15'),
+(10, 3, 3, 2, 2, 'UAS', 80, '2022-06-11 14:32:17', '2022-06-11 14:32:17');
 
 -- --------------------------------------------------------
 
@@ -607,6 +642,28 @@ INSERT INTO `rombel` (`id`, `kelas_id`, `jurusan_id`, `nama`, `created_at`, `upd
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sekolah`
+--
+
+CREATE TABLE `sekolah` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(225) NOT NULL,
+  `no_telepon` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sekolah`
+--
+
+INSERT INTO `sekolah` (`id`, `nama`, `no_telepon`, `alamat`, `created_at`, `updated_at`) VALUES
+(1, 'SMK Banjarnegara', '08123456789', 'Banjarnegara', '2022-06-11 15:00:17', '2022-06-11 15:01:03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `settings`
 --
 
@@ -718,9 +775,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `access_token`, `avatar`, `status`, `last_visit`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin@admin.com', 'admin@admin.com', NULL, '$2y$10$1SIh44UllISnJikI.I7OhOh.ewQXuG1p8T0Rb.kmnHd3Q9b52L.oK', NULL, '2s8209qJw0dJE4KvHOH5FiivK5MnSu9xRjxqC81J', NULL, 1, '2022-06-10 06:34:25', '2022-06-01 04:28:26', '2022-06-10 06:34:25'),
-(2, 2, 'Ahmad Najib, S.Psi', '1002', 'ahmadsongget@gmail.com', NULL, '$2y$10$KTpjuiHmLf02qGXNuC4rGOppseRt3osOZJzVQQQjpSmGzzIqVh7nG', NULL, NULL, NULL, 1, '2022-06-10 01:31:19', '2022-06-10 01:21:10', '2022-06-10 01:45:05'),
-(3, 2, 'Arif Widodo, S.Psi', '1001', 'arifdowski@gmail.com', NULL, '$2y$10$BR3ykxFNyttzpXV7AmY/k.KabM3f8NUjrIgFIzXRWYBxz2az031Wu', NULL, NULL, NULL, 1, '2022-06-10 06:25:27', '2022-06-10 01:22:03', '2022-06-10 06:25:27'),
+(1, 1, 'Admin', 'admin@admin.com', 'admin@admin.com', NULL, '$2y$10$1SIh44UllISnJikI.I7OhOh.ewQXuG1p8T0Rb.kmnHd3Q9b52L.oK', NULL, '2s8209qJw0dJE4KvHOH5FiivK5MnSu9xRjxqC81J', NULL, 1, '2022-06-11 14:50:19', '2022-06-01 04:28:26', '2022-06-11 14:50:19'),
+(2, 2, 'Ahmad Najib, S.Psi', '1002', 'ahmadsongget@gmail.com', NULL, '$2y$10$KTpjuiHmLf02qGXNuC4rGOppseRt3osOZJzVQQQjpSmGzzIqVh7nG', NULL, NULL, NULL, 1, '2022-06-11 12:52:01', '2022-06-10 01:21:10', '2022-06-11 12:52:01'),
+(3, 2, 'Arif Widodo, S.Psi', '1001', 'arifdowski@gmail.com', NULL, '$2y$10$BR3ykxFNyttzpXV7AmY/k.KabM3f8NUjrIgFIzXRWYBxz2az031Wu', NULL, NULL, NULL, 1, '2022-06-11 08:47:03', '2022-06-10 01:22:03', '2022-06-11 08:47:03'),
 (4, 2, 'Irvan Aditya Febriananta, S.Psi', '1003', 'klunteng@gmail.com', NULL, '$2y$10$iyoDgCFfaQmY/BvUWny5Hew.pApvdmwry95ek/69pxTz4wnLXru2y', NULL, NULL, NULL, 1, NULL, '2022-06-10 01:30:17', '2022-06-10 01:30:17');
 
 -- --------------------------------------------------------
@@ -806,7 +863,11 @@ INSERT INTO `visitors` (`id`, `user_id`, `ip_address`, `device`, `browser`, `pla
 (11, 2, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-10 01:31:24', '2022-06-10 01:31:24'),
 (12, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-10 06:23:20', '2022-06-10 06:23:20'),
 (13, 3, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-10 06:25:31', '2022-06-10 06:25:31'),
-(14, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-10 06:34:31', '2022-06-10 06:34:31');
+(14, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-10 06:34:31', '2022-06-10 06:34:31'),
+(15, 3, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-11 08:47:12', '2022-06-11 08:47:12'),
+(16, 2, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-11 09:37:03', '2022-06-11 09:37:03'),
+(17, 2, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-11 12:52:08', '2022-06-11 12:52:08'),
+(18, 1, '127.0.0.1', '{\"type\":\"Desktop\",\"family\":\"Unknown\",\"model\":\"\",\"grade\":\"\"}', '{\"name\":\"Opera 87.0.4390\",\"family\":\"Opera\",\"version\":\"87.0.4390\",\"engine\":\"Blink\"}', '{\"name\":\"Windows 10\",\"family\":\"Windows\",\"version\":\"10\"}', '', '2022-06-11 14:50:25', '2022-06-11 14:50:25');
 
 -- --------------------------------------------------------
 
@@ -932,6 +993,12 @@ ALTER TABLE `mutasi_siswa`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `nilai`
+--
+ALTER TABLE `nilai`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -961,6 +1028,12 @@ ALTER TABLE `roles`
 -- Indexes for table `rombel`
 --
 ALTER TABLE `rombel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sekolah`
+--
+ALTER TABLE `sekolah`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1098,7 +1171,7 @@ ALTER TABLE `menu_headers`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `metas`
@@ -1117,6 +1190,12 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `mutasi_siswa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `nilai`
+--
+ALTER TABLE `nilai`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1141,6 +1220,12 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `rombel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `sekolah`
+--
+ALTER TABLE `sekolah`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1188,7 +1273,7 @@ ALTER TABLE `user_avatars`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `wali_kelas`

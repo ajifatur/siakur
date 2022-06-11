@@ -4,8 +4,8 @@ Password: password
 
 
 ### Akun Guru
-Username: 1001
-Password: 1001
+Username: 1002
+Password: 1002
 
 
 ### Instalasi
@@ -23,7 +23,8 @@ Password: 1001
 - Guru mapel
 - Wali kelas
 - Mutasi siswa
-- Nilai (25%)
+- Nilai
+- Identitas sekolah
 
 
 ### Delayed
