@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\KKM;
 use App\Models\Nilai;
 use App\Models\TahunAkademik;
 
@@ -14,6 +15,13 @@ if(!function_exists('tahun_akademik_all')) {
     function tahun_akademik_all() {
         $tahun_akademik = TahunAkademik::orderBy('status','desc')->get();
         return $tahun_akademik;
+    }
+}
+
+if(!function_exists('kkm')) {
+    function kkm($kelas, $mapel, $jenis) {
+        $kkm = KKM::where('kelas_id','=',$kelas)->where('mapel_id','=',$mapel)->where('jenis','=',$jenis)->where('ta_id','=',session()->get('taa'))->first();
+        return $kkm ? $kkm->kkm : 0;
     }
 }
 
@@ -43,6 +51,22 @@ if(!function_exists('total_nilai')) {
         }
         $total = (($uh / $count_uh) + $uts + $uas) / 3;
         return round($total,0);
+    }
+}
+
+if(!function_exists('predikat')) {
+    function predikat($nilai, $kkm) {
+        if($nilai < $kkm)
+            return 'D';
+        else {
+            $selisih = 100 - $kkm;
+            if($nilai >= $kkm && $nilai <= ($kkm + ($selisih / 3)))
+                return 'C';
+            elseif($nilai > ($kkm + ($selisih / 3)) && $nilai <= ($kkm + ($selisih * 2 / 3)))
+                return 'B';
+            else
+                return 'A';
+        }
     }
 }
 

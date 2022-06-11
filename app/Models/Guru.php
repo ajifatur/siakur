@@ -40,4 +40,12 @@ class Guru extends Model
     {
         return $this->hasMany(GuruMapel::class);
     }
+
+    /**
+     * Wali kelas.
+     */
+    public function wali_kelas()
+    {
+        return $this->hasMany(WaliKelas::class);
+    }
 }

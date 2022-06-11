@@ -22,16 +22,16 @@ class Mapel extends Model
      * @var array
      */
     protected $fillable = [
-        'nama', 'singkatan'
+        'nama', 'kode', 'num_order'
     ];
 
-    // /**
-    //  * Get the users for the role.
-    //  */
-    // public function users()
-    // {
-    //     return $this->hasMany(User::class);
-    // }
+    /**
+     * Guru mapel.
+     */
+    public function guru_mapel()
+    {
+        return $this->hasMany(GuruMapel::class);
+    }
 
     // /**
     //  * The permissions that belong to the role.

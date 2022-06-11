@@ -64,10 +64,14 @@ class MapelController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
+            // Mengambil mapel terakhir
+            $m = Mapel::latest('num_order')->first();
+
             // Simpan mapel
             $mapel = new Mapel;
             $mapel->nama = $request->nama;
             $mapel->kode = $request->kode;
+            $mapel->num_order = $m ? $m->num_order + 1 : 1;
             $mapel->save();
 
             // Redirect
