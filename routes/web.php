@@ -138,6 +138,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
 
     // Mapel
     Route::get('/admin/nilai', 'NilaiController@index')->name('admin.nilai.index');
+    Route::get('/admin/nilai/set/{gurumapel_id}/{rombel_id}', 'NilaiController@set')->name('admin.nilai.set');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();

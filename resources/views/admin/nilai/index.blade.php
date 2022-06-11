@@ -26,7 +26,7 @@
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
                                 <th>Mata Pelajaran</th>
                                 <th>Rombel</th>
-                                <th width="60">Opsi</th>
+                                <th width="30">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,7 +37,7 @@
                                 <td>{{ $j->rombel->nama }}</td>
                                 <td align="center">
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.guru.edit', ['id' => $j->id]) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Atur Nilai"><i class="bi-wrench"></i></a>
+                                        <a href="{{ route('admin.nilai.set', ['gurumapel_id' => $j->gurumapel_id, 'rombel_id' => $j->rombel_id]) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Atur Nilai"><i class="bi-wrench"></i></a>
                                     </div>
                                 </td>
                             </tr>

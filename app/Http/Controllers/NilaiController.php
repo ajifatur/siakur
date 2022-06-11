@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\Helpers\DateTimeExt;
+use App\Models\AnggotaRombel;
+use App\Models\GuruMapel;
 use App\Models\Jadwal;
+use App\Models\KKM;
+use App\Models\Rombel;
 use App\Models\User;
 
 class NilaiController extends Controller
@@ -34,6 +38,42 @@ class NilaiController extends Controller
             return view('admin/nilai/index', [
                 'guru_mapel' => $guru_mapel,
                 'jadwal' => $jadwal,
+            ]);
+        }
+    }
+
+    public function set($gurumapel_id, $rombel_id)
+    {
+        if(Auth::user()->role_id == role('guru')) {
+            if(!in_array($gurumapel_id, Auth::user()->guru->guru_mapel->pluck('id')->toArray()))
+                abort(403);
+
+            // Mengambil data guru mapel
+            $guru_mapel = GuruMapel::findOrFail($gurumapel_id);
+
+            // Mengambil data rombel
+            $rombel = Rombel::findOrFail($rombel_id);
+
+            // Mengambil data anggota rombel
+            $anggota_rombel = AnggotaRombel::where('rombel_id','=',$rombel->id)->where('ta_id','=',session()->get('taa'))->orderby('no_urut','asc')->get();
+
+            // KKM pengetahuan
+            $kkm_p = KKM::where('kelas_id','=',$rombel->kelas_id)->where('mapel_id','=',$guru_mapel->mapel_id)->where('jenis','=',1)->where('ta_id','=',session()->get('taa'))->first();
+
+            // KKM keterampilan
+            $kkm_k = KKM::where('kelas_id','=',$rombel->kelas_id)->where('mapel_id','=',$guru_mapel->mapel_id)->where('jenis','=',2)->where('ta_id','=',session()->get('taa'))->first();
+
+            // Array ulangan
+            $ulangan = ['UH 1', 'UH 2', 'UH 3', 'UTS', 'UAS'];
+
+            // View
+            return view('admin/nilai/set', [
+                'guru_mapel' => $guru_mapel,
+                'rombel' => $rombel,
+                'anggota_rombel' => $anggota_rombel,
+                'ulangan' => $ulangan,
+                'kkm_p' => $kkm_p,
+                'kkm_k' => $kkm_k,
             ]);
         }
     }
