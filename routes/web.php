@@ -136,9 +136,10 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::post('/admin/jadwal/store', 'JadwalController@store')->name('admin.jadwal.store');
     Route::post('/admin/jadwal/delete', 'JadwalController@delete')->name('admin.jadwal.delete');
 
-    // Mapel
+    // Nilai
     Route::get('/admin/nilai', 'NilaiController@index')->name('admin.nilai.index');
     Route::get('/admin/nilai/set/{gurumapel_id}/{rombel_id}', 'NilaiController@set')->name('admin.nilai.set');
+    Route::post('/admin/nilai/store', 'NilaiController@store')->name('admin.nilai.store');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();

@@ -6,20 +6,14 @@
 
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-2 mb-sm-0">Atur Nilai</h1>
-    <div class="btn-group">
-        <!-- <a href="{{ route('admin.rombel.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Rombel</a> -->
-    </div>
 </div>
 <div class="row">
 	<div class="col-12">
 		<div class="card">
             <div class="card-body">
-                @if(Session::get('message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <div class="alert-message">{{ Session::get('message') }}</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert alert-warning" role="alert">
+                    <div class="alert-message">Nilai otomatis tersimpan setelah diinput / diubah.</div>
                 </div>
-                @endif
                 <ul class="list-group list-group-flush mb-3">
                     <li class="list-group-item d-flex justify-content-between px-0 py-1">
                         <span class="fw-bold">Mata Pelajaran:</span>
@@ -64,13 +58,21 @@
                                 <td align="right">{{ $ar->no_urut }}</td>
                                 <td>{{ $ar->siswa ? $ar->siswa->nama : '-' }}</td>
                                 @foreach($ulangan as $u)
-                                <td width="50"><input type="text" class="form-control form-control-sm score"></td>
+                                <td width="50">
+                                    <input type="text" class="form-control form-control-sm score" value="{{ nilai($ar->siswa_id, $guru_mapel->id, 1, $u) }}" data-siswa="{{ $ar->siswa_id }}" data-jenis="1" data-ulangan="{{ $u }}">
+                                </td>
                                 @endforeach
-                                <td width="50" align="center"><span class="fw-bold">0</span></td>
+                                <td width="50" align="center">
+                                    <span class="fw-bold total-p" data-id="{{ $ar->siswa_id }}">{{ total_nilai($ar->siswa_id, $guru_mapel->id, 1) }}</span>
+                                </td>
                                 @foreach($ulangan as $u)
-                                <td width="50"><input type="text" class="form-control form-control-sm score"></td>
+                                <td width="50">
+                                    <input type="text" class="form-control form-control-sm score" value="{{ nilai($ar->siswa_id, $guru_mapel->id, 2, $u) }}" data-siswa="{{ $ar->siswa_id }}" data-jenis="2" data-ulangan="{{ $u }}">
+                                </td>
                                 @endforeach
-                                <td width="50" align="center"><span class="fw-bold">0</span></td>
+                                <td width="50" align="center">
+                                    <span class="fw-bold total-k" data-id="{{ $ar->siswa_id }}">{{ total_nilai($ar->siswa_id, $guru_mapel->id, 2) }}</span>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -95,6 +97,7 @@
 @section('js')
 
 <script type="text/javascript">
+    // Normalisasi nilai
     $(document).on("keyup", ".score", function() {
         if(isNaN($(this).val()) || $(this).val() == '')
             $(this).val(0);
@@ -104,6 +107,26 @@
         var value = $(this).val();
         if(value < 0) $(this).val(0);
         else if(value > 100) $(this).val(100);
+    });
+
+    // Update nilai
+    $(document).on("change", ".score", function() {
+        var nilai = $(this).val();
+        var siswa = $(this).data("siswa");
+        var gurumapel = "{{ $guru_mapel->id }}";
+        var jenis = $(this).data("jenis");
+        var ulangan = $(this).data("ulangan");
+        $.ajax({
+            type: "post",
+            url: "{{ route('admin.nilai.store') }}",
+            data: {_token: "{{ csrf_token() }}", siswa: siswa, gurumapel: gurumapel, jenis: jenis, ulangan: ulangan, nilai: nilai},
+            success: function(response) {
+                if(jenis == 1)
+                    $(".total-p[data-id="+siswa+"]").text(response.total);
+                else if(jenis == 2)
+                    $(".total-k[data-id="+siswa+"]").text(response.total);
+            }
+        });
     });
 </script>
 
