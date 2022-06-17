@@ -146,6 +146,14 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/rapor/detail/{id}', 'RaporController@detail')->name('admin.rapor.detail');
     Route::post('/admin/rapor/store', 'RaporController@store')->name('admin.rapor.store');
 
+    // File
+    Route::get('/admin/file', 'FileController@index')->name('admin.file.index');
+    Route::get('/admin/file/create', 'FileController@create')->name('admin.file.create');
+    Route::post('/admin/file/store', 'FileController@store')->name('admin.file.store');
+    Route::get('/admin/file/edit/{id}', 'FileController@edit')->name('admin.file.edit');
+    Route::post('/admin/file/update', 'FileController@update')->name('admin.file.update');
+    Route::post('/admin/file/delete', 'FileController@delete')->name('admin.file.delete');
+
     // Identitas Sekolah
     Route::get('/admin/sekolah', 'SekolahController@index')->name('admin.sekolah.index');
     Route::post('/admin/sekolah/store', 'SekolahController@store')->name('admin.sekolah.store');

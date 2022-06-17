@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jurusan extends Model
+class JenisFile extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Jurusan extends Model
      *
      * @var string
      */
-    protected $table = 'jurusan';
+    protected $table = 'jenis_file';
 
     /**
      * The attributes that are mass assignable.
