@@ -44,13 +44,11 @@
                                     @foreach($rombel as $r)
                                         <?php $jadwal = \App\Models\Jadwal::where('jp_id','=',$j->id)->where('rombel_id','=',$r->id)->where('ta_id','=',session()->get('taa'))->where('hari','=',$i)->first(); ?>
                                         @if($jadwal)
-                                            <td width="30">
-                                                <a href="#" class="btn-detail" data-bs-toggle="tooltip" title="Detail Jadwal" data-id="{{ $jadwal->id }}" data-hari="{{ $i }}" data-jam="{{ $j->id }}" data-rombel="{{ $r->id }}" data-mapel="{{ $jadwal->gurumapel_id }}">{{ $jadwal->guru_mapel->mapel->kode }}</a>
+                                            <td width="30" class="{{ in_array($jadwal->gurumapel_id, $guru_mapel_ids) ? 'bg-success' : '' }}">
+                                                <a href="#" class="btn-detail {{ in_array($jadwal->gurumapel_id, $guru_mapel_ids) ? 'text-light fw-bold' : '' }}" data-bs-toggle="tooltip" title="Detail Jadwal" data-id="{{ $jadwal->id }}" data-hari="{{ $i }}" data-jam="{{ $j->id }}" data-rombel="{{ $r->id }}" data-mapel="{{ $jadwal->gurumapel_id }}">{{ $jadwal->guru_mapel->mapel->kode }}</a>
                                             </td>
                                         @else
-                                            <td width="30">
-                                                <a href="#" class="btn btn-sm btn-add text-danger" data-bs-toggle="tooltip" title="Tambah Jadwal" data-hari="{{ $i }}" data-jam="{{ $j->id }}" data-rombel="{{ $r->id }}"><i class="bi-plus-circle"></i></a>
-                                            </td>
+                                            <td width="30">-</td>
                                         @endif
                                     @endforeach
                                 @endfor
@@ -63,11 +61,6 @@
 		</div>
 	</div>
 </div>
-
-<form class="form-delete d-none" method="post" action="{{ route('admin.jadwal.delete') }}">
-    @csrf
-    <input type="hidden" name="id">
-</form>
 
 <div class="modal fade" id="modal-form" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -110,7 +103,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold">Mata Pelajaran</label>
-                        <select name="mapel" class="form-select form-select-sm {{ $errors->has('mapel') ? 'border-danger' : '' }}">
+                        <select name="mapel" class="form-select form-select-sm {{ $errors->has('mapel') ? 'border-danger' : '' }}" disabled>
                             <option value="" disabled selected>--Pilih--</option>
                             @foreach($guru_mapel as $gm)
                             <option value="{{ $gm->id }}" {{ old('mapel') == $gm->id ? 'selected' : '' }}>{{ $gm->mapel->nama }} - {{ $gm->guru->nama }}</option>
@@ -122,8 +115,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-sm btn-danger btn-delete">Hapus</button>
+                    <button type="submit" class="btn btn-sm btn-primary d-none">Simpan</button>
+                    <button type="button" class="btn btn-sm btn-danger btn-delete d-none">Hapus</button>
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </form>
@@ -136,17 +129,6 @@
 @section('js')
 
 <script type="text/javascript">
-    $(document).on("click", ".btn-add", function(e) {
-        e.preventDefault();
-        reset_form();
-        $("#modal-form .modal-title").text("Tambah Jadwal");
-        $("#modal-form input[name=type]").val("create");
-        $("#modal-form select[name=hari]").val($(this).data("hari"));
-        $("#modal-form select[name=jam]").val($(this).data("jam"));
-        $("#modal-form select[name=rombel]").val($(this).data("rombel"));
-        Spandiv.Modal("#modal-form").show();
-    });
-
     $(document).on("click", ".btn-detail", function(e) {
         e.preventDefault();
         reset_form();
@@ -158,7 +140,7 @@
         $("#modal-form select[name=rombel]").val($(this).data("rombel"));
         $("#modal-form select[name=mapel]").val($(this).data("mapel"));
         $("#modal-form .btn-delete").attr("data-id", $(this).data("id"));
-        $("#modal-form .btn-delete").removeClass("d-none");
+        // $("#modal-form .btn-delete").removeClass("d-none");
         Spandiv.Modal("#modal-form").show();
     });
 
@@ -183,20 +165,6 @@
 
     Spandiv.ButtonDelete(".btn-delete", ".form-delete");
 </script>
-
-@if($errors->has('mapel') && old('type') == 'create')
-<script>
-    $("#modal-form .modal-title").text("Tambah Jadwal");
-    Spandiv.Modal("#modal-form").show();
-</script>
-@endif
-
-@if($errors->has('mapel') && old('type') == 'update')
-<script>
-    $("#modal-form .modal-title").text("Detail Jadwal");
-    Spandiv.Modal("#modal-form").show();
-</script>
-@endif
 
 @endsection
 

@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use App\Models\TahunAkademik;
+use App\Models\GuruMapel;
 use App\Models\Jadwal;
 use App\Models\JP;
 use App\Models\Rombel;
-use App\Models\GuruMapel;
+use App\Models\TahunAkademik;
 
 class JadwalController extends Controller
 {
@@ -34,12 +33,26 @@ class JadwalController extends Controller
         // Mengambil data guru mapel
         $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
 
-        // View
-        return view('admin/jadwal/index', [
-            'jp' => $jp,
-            'rombel' => $rombel,
-            'guru_mapel' => $guru_mapel,
-        ]);
+        if(Auth::user()->role_id == role('super-admin')) {
+            // View
+            return view('admin/jadwal/index', [
+                'jp' => $jp,
+                'rombel' => $rombel,
+                'guru_mapel' => $guru_mapel,
+            ]);
+        }
+        elseif(Auth::user()->role_id == role('guru')) {
+            // Mengambil data guru mapel
+            $guru_mapel_ids = Auth::user()->guru->guru_mapel->pluck('id')->toArray();
+
+            // View
+            return view('admin/jadwal/index-teacher', [
+                'jp' => $jp,
+                'rombel' => $rombel,
+                'guru_mapel' => $guru_mapel,
+                'guru_mapel_ids' => $guru_mapel_ids,
+            ]);
+        }
     }
     
     /**
