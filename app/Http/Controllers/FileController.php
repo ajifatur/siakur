@@ -23,15 +23,25 @@ class FileController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        if(Auth::user()->role_id == role('guru')) {
+        // Mengambil data jenis file
+        $jenis_file = JenisFile::findOrFail($request->query('id'));
+
+        if(Auth::user()->role_id == role('super-admin')) {
+            // Mengambil data file
+            $file = Berkas::has('guru_mapel')->has('kelas')->where('jenisfile_id','=',$jenis_file->id)->where('ta_id','=',session()->get('taa'))->get();
+
+            // View
+            return view('admin/file/index', [
+                'jenis_file' => $jenis_file,
+                'file' => $file
+            ]);
+        }
+        elseif(Auth::user()->role_id == role('guru')) {
             // Mengambil data guru mapel
             $guru_mapel = Auth::user()->guru->guru_mapel;
 
-            // Mengambil data jenis file
-            $jenis_file = JenisFile::findOrFail($request->query('id'));
-
             // Mengambil data file
-            $file = Berkas::has('guru_mapel')->has('kelas')->where('jenisfile_id','=',$jenis_file->id)->where('ta_id','=',session()->get('taa'))->get();
+            $file = Berkas::has('guru_mapel')->has('kelas')->where('jenisfile_id','=',$jenis_file->id)->whereIn('gurumapel_id',$guru_mapel->pluck('id')->toArray())->where('ta_id','=',session()->get('taa'))->get();
 
             // View
             return view('admin/file/index', [
