@@ -33,7 +33,7 @@ class JadwalController extends Controller
         // Mengambil data guru mapel
         $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
 
-        if(Auth::user()->role_id == role('super-admin')) {
+        if(Auth::user()->role_id == role('super-admin') || (Auth::user()->guru && Auth::user()->guru->waka_kurikulum->where('ta_id','=',tahun_akademik()->id)->count() > 0)) {
             // View
             return view('admin/jadwal/index', [
                 'jp' => $jp,
@@ -41,7 +41,7 @@ class JadwalController extends Controller
                 'guru_mapel' => $guru_mapel,
             ]);
         }
-        elseif(Auth::user()->role_id == role('guru')) {
+        elseif(Auth::user()->role_id == role('guru') && Auth::user()->guru->waka_kurikulum->where('ta_id','=',tahun_akademik()->id)->count() <= 0) {
             // Mengambil data guru mapel
             $guru_mapel_ids = Auth::user()->guru->guru_mapel->pluck('id')->toArray();
 

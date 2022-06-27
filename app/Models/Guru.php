@@ -26,7 +26,7 @@ class Guru extends Model
     ];
     
     /**
-     * Mengambil user.
+     * User.
      */
     public function user()
     {
@@ -47,5 +47,13 @@ class Guru extends Model
     public function wali_kelas()
     {
         return $this->hasMany(WaliKelas::class);
+    }
+
+    /**
+     * Waka kurikulum.
+     */
+    public function waka_kurikulum()
+    {
+        return $this->hasMany(WakaKurikulum::class);
     }
 }

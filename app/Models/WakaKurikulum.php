@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Siswa extends Model
+class WakaKurikulum extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Siswa extends Model
      *
      * @var string
      */
-    protected $table = 'siswa';
+    protected $table = 'waka_kurikulum';
 
     /**
      * The attributes that are mass assignable.
@@ -22,14 +22,14 @@ class Siswa extends Model
      * @var array
      */
     protected $fillable = [
-        'nomor_identitas', 'nama', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'nomor_telepon', 'alamat', 'foto'
+        
     ];
     
     /**
-     * User.
+     * Mengambil guru yang menjadi waka kurikulum.
      */
-    public function user()
+    public function guru()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Guru::class, 'guru_id');
     }
 }

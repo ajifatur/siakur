@@ -1,13 +1,15 @@
 @extends('faturhelper::layouts/admin/main')
 
-@section('title', 'Kelola Siswa')
+@section('title', 'Kelola Waka Kurikulum')
 
 @section('content')
 
+@include('admin/partials/tahun-akademik')
+
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-2 mb-sm-0">Kelola Siswa</h1>
+    <h1 class="h3 mb-2 mb-sm-0">Kelola Waka Kurikulum</h1>
     <div class="btn-group">
-        <a href="{{ route('admin.siswa.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Siswa</a>
+        <a href="{{ route('admin.waka-kurikulum.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Waka Kurikulum</a>
     </div>
 </div>
 <div class="row">
@@ -25,23 +27,19 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
-                                <th width="80">NIS</th>
-                                <th>Nama</th>
-                                <th width="100">No. Telepon</th>
+                                <th>Guru</th>
                                 <th width="60">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($siswa as $s)
+                            @foreach($waka_kurikulum as $wk)
                             <tr>
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
-                                <td>{{ $s->nomor_identitas }}</td>
-                                <td><a href="{{ route('admin.siswa.detail', ['id' => $s->id]) }}">{{ $s->nama }}</a></td>
-                                <td>{{ $s->nomor_telepon }}</td>
+                                <td>{{ $wk->guru ? $wk->guru->nama : '-' }}</td>
                                 <td align="center">
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.siswa.edit', ['id' => $s->id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit"><i class="bi-pencil"></i></a>
-                                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $s->id }}" data-bs-toggle="tooltip" title="Hapus"><i class="bi-trash"></i></a>
+                                        <a href="{{ route('admin.waka-kurikulum.edit', ['id' => $wk->id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit"><i class="bi-pencil"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $wk->id }}" data-bs-toggle="tooltip" title="Hapus"><i class="bi-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -54,7 +52,7 @@
 	</div>
 </div>
 
-<form class="form-delete d-none" method="post" action="{{ route('admin.siswa.delete') }}">
+<form class="form-delete d-none" method="post" action="{{ route('admin.waka-kurikulum.delete') }}">
     @csrf
     <input type="hidden" name="id">
 </form>

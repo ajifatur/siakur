@@ -87,6 +87,37 @@
                         </div>
                     </div>
                     <hr>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">Email <span class="text-danger">*</span></label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="email" name="email" class="form-control form-control-sm {{ $errors->has('email') ? 'border-danger' : '' }}" value="{{ old('email') }}">
+                            @if($errors->has('email'))
+                            <div class="small text-danger">{{ $errors->first('email') }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">Username <span class="text-danger">*</span></label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="text" name="username" class="form-control form-control-sm {{ $errors->has('username') ? 'border-danger' : '' }}" value="{{ old('username') }}">
+                            @if($errors->has('username'))
+                            <div class="small text-danger">{{ $errors->first('username') }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">Password <span class="text-danger">*</span></label>
+                        <div class="col-lg-10 col-md-9">
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control form-control-sm {{ $errors->has('password') ? 'border-danger' : '' }}">
+                                <button type="button" class="btn btn-sm {{ $errors->has('password') ? 'btn-outline-danger' : 'btn-outline-secondary' }} btn-toggle-password"><i class="bi-eye"></i></button>
+                            </div>
+                            @if($errors->has('password'))
+                            <div class="small text-danger">{{ $errors->first('password') }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <hr>
                     <div class="row">
                         <div class="col-lg-2 col-md-3"></div>
                         <div class="col-lg-10 col-md-9">

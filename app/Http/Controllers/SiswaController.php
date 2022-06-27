@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\Helpers\DateTimeExt;
 use App\Models\Siswa;
+use App\Models\User;
 
 class SiswaController extends Controller
 {
@@ -62,6 +63,9 @@ class SiswaController extends Controller
             'tanggal_lahir' => 'required',
             'nomor_telepon' => 'required',
             'alamat' => 'required',
+            'email' => 'required|email',
+            'username' => 'required|alpha_dash',
+            'password' => 'required'
         ]);
         
         // Check errors
@@ -81,9 +85,43 @@ class SiswaController extends Controller
             $siswa->alamat = $request->alamat;
             $siswa->save();
 
+            // Simpan user
+            $user = new User;
+            $user->role_id = role('siswa');
+            $user->name = $siswa->nama;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->status = 1;
+            $user->save();
+
+            // Update data siswa
+            $siswa->user_id = $user->id;
+            $siswa->save();
+
             // Redirect
             return redirect()->route('admin.siswa.index')->with(['message' => 'Berhasil menambah data.']);
         }
+    }
+
+    /**
+     * Show the detail the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        // Check the access
+        // has_access(method(__METHOD__), Auth::user()->role_id);
+
+        // Mengambil data siswa
+        $siswa = Siswa::findOrFail($id);
+
+        // View
+        return view('admin/siswa/detail', [
+            'siswa' => $siswa
+        ]);
     }
 
     /**
@@ -114,6 +152,10 @@ class SiswaController extends Controller
      */
     public function update(Request $request)
     {
+        // Mengambil data user
+        $siswa = Siswa::find($request->id);
+        $user = User::find($siswa->user_id);
+
         // Validation
         $validator = Validator::make($request->all(), [
             'nama' => 'required|max:200',
@@ -123,6 +165,14 @@ class SiswaController extends Controller
             'tanggal_lahir' => 'required',
             'nomor_telepon' => 'required',
             'alamat' => 'required',
+            'email' => [
+                'required', 'email',
+                $user ? Rule::unique('users')->ignore($user->id, 'id') : ''
+            ],
+            'username' => [
+                'required', 'alpha_dash',
+                $user ? Rule::unique('users')->ignore($user->id, 'id') : ''
+            ],
         ]);
         
         // Check errors
@@ -140,6 +190,20 @@ class SiswaController extends Controller
             $siswa->tanggal_lahir = DateTimeExt::change($request->tanggal_lahir);
             $siswa->nomor_telepon = $request->nomor_telepon;
             $siswa->alamat = $request->alamat;
+            $siswa->save();
+
+            // Update data user
+            if(!$user) $user = new User;
+            $user->role_id = role('siswa');
+            $user->name = $siswa->nama;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
+            $user->status = 1;
+            $user->save();
+
+            // Update data siswa
+            $siswa->user_id = $user->id;
             $siswa->save();
 
             // Redirect

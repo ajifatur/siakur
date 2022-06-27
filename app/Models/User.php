@@ -49,4 +49,12 @@ class User extends \Ajifatur\FaturHelper\Models\User
     {
         return $this->hasOne(Guru::class);
     }
+
+    /**
+     * Siswa.
+     */
+    public function siswa()
+    {
+        return $this->hasOne(Siswa::class);
+    }
 }

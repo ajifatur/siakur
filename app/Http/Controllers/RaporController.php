@@ -26,7 +26,7 @@ class RaporController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        if(Auth::user()->role_id == role('guru')) {
+        if(Auth::user()->role_id == role('guru') && Auth::user()->guru && Auth::user()->guru->wali_kelas->where('ta_id','=',tahun_akademik()->id)->count() > 0) {
             // Mengambil data wali kelas
             $wali_kelas = Auth::user()->guru->wali_kelas()->has('rombel')->where('ta_id','=',session()->get('taa'))->first();
 
@@ -39,6 +39,7 @@ class RaporController extends Controller
                 'anggota_rombel' => $anggota_rombel,
             ]);
         }
+        else abort(403);
     }
 
     /**

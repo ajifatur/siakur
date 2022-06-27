@@ -34,6 +34,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/siswa', 'SiswaController@index')->name('admin.siswa.index');
     Route::get('/admin/siswa/create', 'SiswaController@create')->name('admin.siswa.create');
     Route::post('/admin/siswa/store', 'SiswaController@store')->name('admin.siswa.store');
+    Route::get('/admin/siswa/detail/{id}', 'SiswaController@detail')->name('admin.siswa.detail');
     Route::get('/admin/siswa/edit/{id}', 'SiswaController@edit')->name('admin.siswa.edit');
     Route::post('/admin/siswa/update', 'SiswaController@update')->name('admin.siswa.update');
     Route::post('/admin/siswa/delete', 'SiswaController@delete')->name('admin.siswa.delete');
@@ -122,6 +123,14 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/wali-kelas/edit/{id}', 'WaliKelasController@edit')->name('admin.wali-kelas.edit');
     Route::post('/admin/wali-kelas/update', 'WaliKelasController@update')->name('admin.wali-kelas.update');
     Route::post('/admin/wali-kelas/delete', 'WaliKelasController@delete')->name('admin.wali-kelas.delete');
+    
+    // Waka Kurikulum
+    Route::get('/admin/waka-kurikulum', 'WakaKurikulumController@index')->name('admin.waka-kurikulum.index');
+    Route::get('/admin/waka-kurikulum/create', 'WakaKurikulumController@create')->name('admin.waka-kurikulum.create');
+    Route::post('/admin/waka-kurikulum/store', 'WakaKurikulumController@store')->name('admin.waka-kurikulum.store');
+    Route::get('/admin/waka-kurikulum/edit/{id}', 'WakaKurikulumController@edit')->name('admin.waka-kurikulum.edit');
+    Route::post('/admin/waka-kurikulum/update', 'WakaKurikulumController@update')->name('admin.waka-kurikulum.update');
+    Route::post('/admin/waka-kurikulum/delete', 'WakaKurikulumController@delete')->name('admin.waka-kurikulum.delete');
     
     // Mutasi Siswa
     Route::get('/admin/mutasi-siswa', 'MutasiSiswaController@index')->name('admin.mutasi-siswa.index');

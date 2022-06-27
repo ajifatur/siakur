@@ -28,7 +28,7 @@ class NilaiController extends Controller
         // Check the access
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
-        if(Auth::user()->role_id == role('guru')) {
+        if(Auth::user()->role_id == role('guru') && Auth::user()->guru && Auth::user()->guru->guru_mapel->where('ta_id','=',tahun_akademik()->id)->count() > 0) {
             // Mengambil data guru mapel
             $guru_mapel = Auth::user()->guru->guru_mapel;
 
@@ -41,6 +41,7 @@ class NilaiController extends Controller
                 'jadwal' => $jadwal,
             ]);
         }
+        else abort(403);
     }
 
     public function set($gurumapel_id, $rombel_id)
