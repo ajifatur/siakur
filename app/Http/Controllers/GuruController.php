@@ -106,6 +106,27 @@ class GuruController extends Controller
     }
 
     /**
+     * Show the detail from the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        // Check the access
+        // has_access(method(__METHOD__), Auth::user()->role_id);
+
+        // Mengambil data guru
+        $guru = Guru::findOrFail($id);
+
+        // View
+        return view('admin/guru/detail', [
+            'guru' => $guru
+        ]);
+    }
+
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

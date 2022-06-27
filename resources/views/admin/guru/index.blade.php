@@ -36,7 +36,7 @@
                             <tr>
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
                                 <td>{{ $g->nomor_identitas }}</td>
-                                <td>{{ $g->nama }}</td>
+                                <td><a href="{{ route('admin.guru.detail', ['id' => $g->id]) }}">{{ $g->nama }}</a></td>
                                 <td>{{ $g->nomor_telepon }}</td>
                                 <td align="center">
                                     <div class="btn-group">

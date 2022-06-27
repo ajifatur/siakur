@@ -26,6 +26,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/guru', 'GuruController@index')->name('admin.guru.index');
     Route::get('/admin/guru/create', 'GuruController@create')->name('admin.guru.create');
     Route::post('/admin/guru/store', 'GuruController@store')->name('admin.guru.store');
+    Route::get('/admin/guru/detail/{id}', 'GuruController@detail')->name('admin.guru.detail');
     Route::get('/admin/guru/edit/{id}', 'GuruController@edit')->name('admin.guru.edit');
     Route::post('/admin/guru/update', 'GuruController@update')->name('admin.guru.update');
     Route::post('/admin/guru/delete', 'GuruController@delete')->name('admin.guru.delete');
