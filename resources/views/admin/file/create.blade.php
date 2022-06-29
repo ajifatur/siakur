@@ -42,6 +42,16 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">File <span class="text-danger">*</span></label>
+                        <div class="col-lg-10 col-md-9">
+                            <input type="file" name="file">
+                            @if($errors->has('file'))
+                            <br>
+                            <div class="small text-danger">{{ $errors->first('file') }}</div>
+                            @endif
+                        </div>
+                    </div>
                     <hr>
                     <div class="row">
                         <div class="col-lg-2 col-md-3"></div>

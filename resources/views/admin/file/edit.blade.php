@@ -43,6 +43,22 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-lg-2 col-md-3 col-form-label">File</label>
+                        <div class="col-lg-10 col-md-9">
+                            @if($file->file != '')
+                                <a href="{{ asset('uploads/'.$file->file) }}" target="_blank">{{ $file->file }}</a>
+                            @endif
+                            <br>
+                            <input type="file" name="file">
+                            <br>
+                            <div class="small text-muted">Kosongi saja jika tidak ingin mengubah file.</div>
+                            @if($errors->has('file'))
+                            <br>
+                            <div class="small text-danger">{{ $errors->first('file') }}</div>
+                            @endif
+                        </div>
+                    </div>
                     <hr>
                     <div class="row">
                         <div class="col-lg-2 col-md-3"></div>

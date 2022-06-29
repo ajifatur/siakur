@@ -94,6 +94,7 @@ class FileController extends Controller
         $validator = Validator::make($request->all(), [
             'guru_mapel' => 'required',
             'kelas' => 'required',
+            'file' => 'required',
         ]);
         
         // Check errors
@@ -102,13 +103,21 @@ class FileController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
+            // Upload file
+            $uploaded_file = $request->file('file');
+            $filename = '';
+            if($uploaded_file != null) {
+                $filename = date('Y-m-d-H-i-s').'_'.Auth::user()->id.'.'.$uploaded_file->getClientOriginalExtension();
+                $uploaded_file->move('uploads', $filename);
+            }
+
             // Simpan file
             $file = new Berkas;
             $file->gurumapel_id = $request->guru_mapel;
             $file->kelas_id = $request->kelas;
             $file->jenisfile_id = $request->jenis_file;
             $file->ta_id = session()->get('taa');
-            $file->file = '';
+            $file->file = $filename;
             $file->save();
 
             // Redirect
@@ -166,10 +175,19 @@ class FileController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         else {
+            // Upload file
+            $uploaded_file = $request->file('file');
+            $filename = '';
+            if($uploaded_file != null) {
+                $filename = date('Y-m-d-H-i-s').'_'.Auth::user()->id.'.'.$uploaded_file->getClientOriginalExtension();
+                $uploaded_file->move('uploads', $filename);
+            }
+
             // Update data file
             $file = Berkas::find($request->id);
             $file->gurumapel_id = $request->guru_mapel;
             $file->kelas_id = $request->kelas;
+            $file->file = $filename != '' ? $filename : $file->file;
             $file->save();
 
             // Redirect

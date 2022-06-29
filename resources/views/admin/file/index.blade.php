@@ -46,7 +46,7 @@
                                 <td>{{ $f->kelas->nama }}</td>
                                 <td align="center">
                                     <div class="btn-group">
-                                        <a href="{{ asset('assets/file/'.$f->file) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Download"><i class="bi-download"></i></a>
+                                        <a href="{{ asset('uploads/'.$f->file) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Download" target="_blank"><i class="bi-download"></i></a>
                                         <a href="{{ route('admin.file.edit', ['id' => $f->id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit"><i class="bi-pencil"></i></a>
                                         <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $f->id }}" data-bs-toggle="tooltip" title="Hapus"><i class="bi-trash"></i></a>
                                     </div>
