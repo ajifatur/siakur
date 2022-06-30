@@ -167,6 +167,10 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     // Identitas Sekolah
     Route::get('/admin/sekolah', 'SekolahController@index')->name('admin.sekolah.index');
     Route::post('/admin/sekolah/store', 'SekolahController@store')->name('admin.sekolah.store');
+
+    // Kalender Akademik
+    Route::get('/admin/kalender-akademik', 'KalenderAkademikController@index')->name('admin.kalender-akademik.index');
+    Route::post('/admin/kalender-akademik/create', 'KalenderAkademikController@create')->name('admin.kalender-akademik.create');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();
