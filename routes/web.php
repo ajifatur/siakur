@@ -170,7 +170,9 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
 
     // Kalender Akademik
     Route::get('/admin/kalender-akademik', 'KalenderAkademikController@index')->name('admin.kalender-akademik.index');
-    Route::post('/admin/kalender-akademik/create', 'KalenderAkademikController@create')->name('admin.kalender-akademik.create');
+    Route::post('/admin/kalender-akademik/store', 'KalenderAkademikController@store')->name('admin.kalender-akademik.store');
+    Route::post('/admin/kalender-akademik/update', 'KalenderAkademikController@update')->name('admin.kalender-akademik.update');
+    Route::get('/admin/kalender-akademik/delete', 'KalenderAkademikController@delete')->name('admin.kalender-akademik.delete');
 });
 
 \Ajifatur\Helpers\RouteExt::auth();
