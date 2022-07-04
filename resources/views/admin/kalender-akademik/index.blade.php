@@ -5,15 +5,11 @@
 @section('content')
 
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-2 mb-sm-0">Kelola Kalender Akademik</h1>
+    <h1 class="h3 mb-2 mb-sm-0">{{ (Auth::user()->role_id !== role('siswa')) ? 'Kelola Kalender Akademik' : 'Kalender Akademik' }}</h1>
 </div>
 
 <div class="row">
-    @if(Auth::user()->role_id !== role('siswa'))
-    <div class="col-md-9">
-    @else
-    <div class="col-md-12">
-    @endif
+    <div class="{{ (Auth::user()->role_id !== role('siswa')) ? 'col-md-9' : 'col-md-12' }}">
         <div class="card">
             <div class="card-body">
                 @if(Session::get('message'))
