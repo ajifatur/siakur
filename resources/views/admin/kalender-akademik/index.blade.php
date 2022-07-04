@@ -9,7 +9,11 @@
 </div>
 
 <div class="row">
+    @if(Auth::user()->role_id !== role('siswa'))
     <div class="col-md-9">
+    @else
+    <div class="col-md-12">
+    @endif
         <div class="card">
             <div class="card-body">
                 @if(Session::get('message'))
@@ -22,6 +26,8 @@
             </div>
         </div>
     </div>
+
+    @if(Auth::user()->role_id !== role('siswa'))    
     <div class="col-md-3">
         <div class="card">
             <div class="card-header border-bottom text-center">
@@ -60,6 +66,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 <!-- Event Details Modal -->
 <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="event-details-modal">
@@ -85,8 +92,10 @@
             </div>
             <div class="modal-footer">
                 <div class="text-end">
+                    @if(Auth::user()->role_id !== role('siswa'))
                     <button type="button" class="btn btn-primary" id="edit" data-id="">Edit</button>
                     <button type="button" class="btn btn-danger" id="delete" data-id="">Delete</button>
+                    @endif
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
