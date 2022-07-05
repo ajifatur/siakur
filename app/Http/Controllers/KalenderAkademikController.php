@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Models\GuruMapel;
 use App\Models\KalenderAkademik;
 
 class KalenderAkademikController extends Controller
@@ -21,10 +22,22 @@ class KalenderAkademikController extends Controller
         // Mengambil data kalender akademik
         $kalender_akademik = KalenderAkademik::get();
 
+        // Mengambil data guru mapel
+        $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
+
         // View
-        return view('admin/kalender-akademik/index', [
-            'kalender_akademik' => $kalender_akademik
-        ]);
+        if(Auth::user()->role_id == role('super-admin') || (Auth::user()->guru && Auth::user()->guru->waka_kurikulum->where('ta_id','=',tahun_akademik()->id)->count() > 0)) {
+            return view('admin/kalender-akademik/index', [
+                'kalender_akademik' => $kalender_akademik,
+                'guru_mapel' => $guru_mapel,
+            ]);
+        }
+        elseif(Auth::user()->role_id == role('guru') || Auth::user()->role_id == role('siswa')) {
+            // Mengambil data guru mapel
+            return view('admin/kalender-akademik/index-teacher', [
+                'kalender_akademik' => $kalender_akademik
+            ]);
+        }
     }
 
     /**

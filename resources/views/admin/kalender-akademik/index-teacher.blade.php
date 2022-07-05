@@ -5,11 +5,11 @@
 @section('content')
 
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-2 mb-sm-0">Kelola Kalender Akademik</h1>
+    <h1 class="h3 mb-2 mb-sm-0">Kalender Akademik</h1>
 </div>
 
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 @if(Session::get('message'))
@@ -19,44 +19,6 @@
                 </div>
                 @endif
                 <div id="calendar"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-header border-bottom text-center">
-                <h5 class="mb-0">Tambah Agenda</h5>
-            </div>
-            <div class="card-body">
-                <form method="post" action="{{ route('admin.kalender-akademik.store') }}" enctype="multipart/form-data" id="schedule-form">
-                    @csrf
-                    <input type="hidden" name="id" value="">
-                    <div class="form-group mb-2">
-                        <label for="title" class="control-label">Judul</label>
-                        <input type="text" class="form-control" name="title" id="title" required>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="description" class="control-label">Deskripsi</label>
-                        <textarea rows="3" class="form-control" name="description" id="description" required></textarea>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="start_datetime" class="control-label">Warna</label>
-                        <input type="color" class="form-control" name="color" id="color" required>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="start_datetime" class="control-label">Mulai</label>
-                        <input type="datetime-local" class="form-control" name="start_datetime" id="start_datetime" required>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="end_datetime" class="control-label">Selesai</label>
-                        <input type="datetime-local" class="form-control" name="end_datetime" id="end_datetime" required>
-                    </div>
-
-                    <div class="text-center mt-3">
-                        <button class="btn btn-primary" type="submit"><i class="bi bi-save"></i> Simpan</button>
-                        <button class="btn btn-default border" type="reset"><i class="bi bi-x-square"></i> Batal</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -85,8 +47,6 @@
             </div>
             <div class="modal-footer">
                 <div class="text-end">
-                    <button type="button" class="btn btn-primary" id="edit" data-id="">Edit</button>
-                    <button type="button" class="btn btn-danger" id="delete" data-id="">Delete</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
