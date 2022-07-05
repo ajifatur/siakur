@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\GuruMapel;
+use App\Models\AnggotaRombel;
 use App\Models\Jadwal;
 use App\Models\JP;
 use App\Models\Rombel;
@@ -30,6 +31,9 @@ class JadwalController extends Controller
         // Mengambil data rombel
         $rombel = Rombel::orderBy('nama','asc')->get();
 
+        // Mengambil data anggota rombel
+        $anggota_rombel = AnggotaRombel::has('rombel')->has('siswa')->where('siswa_id','=','2')->where('ta_id','=',tahun_akademik()->id)->first();
+
         // Mengambil data guru mapel
         $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
 
@@ -51,6 +55,16 @@ class JadwalController extends Controller
                 'rombel' => $rombel,
                 'guru_mapel' => $guru_mapel,
                 'guru_mapel_ids' => $guru_mapel_ids,
+            ]);
+        }
+        elseif(Auth::user()->role_id == role('siswa')) {
+
+            // View
+            return view('admin/jadwal/index-siswa', [
+                'jp' => $jp,
+                'rombel' => $rombel,
+                'guru_mapel' => $guru_mapel,
+                'anggota_rombel' => $anggota_rombel,
             ]);
         }
     }
