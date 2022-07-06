@@ -12,6 +12,7 @@ use App\Models\Jadwal;
 use App\Models\Mapel;
 use App\Models\Rapor;
 use App\Models\TahunAkademik;
+use App\Models\WaliKelas;
 
 class RaporController extends Controller
 {
@@ -37,6 +38,45 @@ class RaporController extends Controller
             return view('admin/rapor/index', [
                 'wali_kelas' => $wali_kelas,
                 'anggota_rombel' => $anggota_rombel,
+            ]);
+        }
+        elseif(Auth::user()->role_id == role('siswa')){
+            // Mengambil data wali kelas
+            $wali_kelas = WaliKelas::has('rombel')->where('ta_id','=',session()->get('taa'))->firstOrFail();
+
+            // Mengambil data anggota rombel
+            $anggota_rombel = $wali_kelas ? AnggotaRombel::has('rombel')->has('siswa')->where('rombel_id','=',$wali_kelas->rombel_id)->where('siswa_id','=',Auth::user()->siswa->id)->where('ta_id','=',session()->get('taa'))->first() : null;
+
+            // Mengambil data rapor
+            $rapor = $anggota_rombel != null ? Rapor::where('siswa_id','=',Auth::user()->siswa->id)->where('rombel_id','=',$anggota_rombel->rombel_id)->where('ta_id','=',session()->get('taa'))->first() : null;
+
+            // Mengambil data tahun akademik
+            $tahun_akademik = TahunAkademik::findOrFail(session()->get('taa'));
+
+            // Mengambil data jadwal
+            $jadwal = $wali_kelas ? Jadwal::has('rombel')->has('guru_mapel')->where('rombel_id','=',$wali_kelas->rombel_id)->where('ta_id','=',session()->get('taa'))->groupBy('gurumapel_id')->get() : [];
+
+            // Mengambil ID mapel
+            $ids = [];
+            foreach($jadwal as $j) {
+                array_push($ids, $j->guru_mapel->mapel_id);
+            }
+
+            // Mengambil data mata pelajaran
+            $mapel = Mapel::whereIn('id',$ids)->orderBy('num_order')->get();
+            $jgm = $jadwal->pluck('gurumapel_id')->toArray();
+            foreach($mapel as $key=>$m) {
+                $gm = $m->guru_mapel()->where('ta_id','=',session()->get('taa'))->pluck('id')->toArray();
+                $mapel[$key]->gm = array_intersect($gm, $jgm);
+            }
+
+            // View
+            return view('admin/rapor/index-siswa', [
+                'wali_kelas' => $wali_kelas,
+                'anggota_rombel' => $anggota_rombel,
+                'rapor' => $rapor,
+                'tahun_akademik' => $tahun_akademik,
+                'mapel' => $mapel,
             ]);
         }
         else abort(403);
