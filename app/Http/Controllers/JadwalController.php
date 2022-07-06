@@ -32,7 +32,7 @@ class JadwalController extends Controller
         $rombel = Rombel::orderBy('nama','asc')->get();
 
         // Mengambil data anggota rombel
-        $anggota_rombel = AnggotaRombel::has('rombel')->has('siswa')->where('siswa_id','=','2')->where('ta_id','=',tahun_akademik()->id)->first();
+        $anggota_rombel = AnggotaRombel::has('rombel')->has('siswa')->where('siswa_id','=',Auth::user()->siswa->id)->where('ta_id','=',tahun_akademik()->id)->first();
 
         // Mengambil data guru mapel
         $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
