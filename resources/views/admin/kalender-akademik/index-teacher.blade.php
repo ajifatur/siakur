@@ -1,6 +1,6 @@
 @extends('faturhelper::layouts/admin/main')
 
-@section('title', 'Kelola Kalender Akademik')
+@section('title', 'Kalender Akademik')
 
 @section('content')
 
