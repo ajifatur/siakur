@@ -14,6 +14,7 @@ use App\Models\KKM;
 use App\Models\Nilai;
 use App\Models\Rombel;
 use App\Models\User;
+use App\Models\Siswa;
 
 class NilaiController extends Controller
 {
@@ -37,6 +38,23 @@ class NilaiController extends Controller
 
             // View
             return view('admin/nilai/index', [
+                'guru_mapel' => $guru_mapel,
+                'jadwal' => $jadwal,
+            ]);
+        }
+        elseif(Auth::user()->role_id == role('siswa')){
+            // Mengambil data anggota rombel
+            $anggota_rombel = AnggotaRombel::has('rombel')->has('siswa')->where('siswa_id','=',Auth::user()->siswa->id)->where('ta_id','=',tahun_akademik()->id)->first();
+
+            // Mengambil data guru mapel
+            $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
+
+            // Mengambil data jadwal
+            $jadwal = Jadwal::has('rombel')->where('rombel_id','=',$anggota_rombel->rombel_id)->where('ta_id','=',session()->get('taa'))->groupBy('gurumapel_id')->get();
+
+            // View
+            return view('admin/nilai/index-siswa', [
+                'anggota_rombel' => $anggota_rombel,
                 'guru_mapel' => $guru_mapel,
                 'jadwal' => $jadwal,
             ]);
@@ -78,6 +96,40 @@ class NilaiController extends Controller
                 'kkm_k' => $kkm_k,
             ]);
         }
+    }
+
+    public function detail($gurumapel_id, $rombel_id)
+    {
+        if(Auth::user()->role_id == role('siswa')) {
+            // Mengambil data guru mapel
+            $guru_mapel = GuruMapel::has('mapel')->findOrFail($gurumapel_id);
+
+            // Mengambil data rombel
+            $rombel = Rombel::findOrFail($rombel_id);
+
+            // Mengambil data anggota rombel
+            $anggota_rombel = AnggotaRombel::where('rombel_id','=',$rombel->id)->where('siswa_id','=',Auth::user()->siswa->id)->where('ta_id','=',session()->get('taa'))->orderby('no_urut','asc')->get();
+
+            // KKM pengetahuan
+            $kkm_p = KKM::where('kelas_id','=',$rombel->kelas_id)->where('mapel_id','=',$guru_mapel->mapel_id)->where('jenis','=',1)->where('ta_id','=',session()->get('taa'))->first();
+
+            // KKM keterampilan
+            $kkm_k = KKM::where('kelas_id','=',$rombel->kelas_id)->where('mapel_id','=',$guru_mapel->mapel_id)->where('jenis','=',2)->where('ta_id','=',session()->get('taa'))->first();
+
+            // Array ulangan
+            $ulangan = ['UH 1', 'UH 2', 'UH 3', 'UTS', 'UAS'];
+
+            // View
+            return view('admin/nilai/detail-siswa', [
+                'guru_mapel' => $guru_mapel,
+                'rombel' => $rombel,
+                'anggota_rombel' => $anggota_rombel,
+                'ulangan' => $ulangan,
+                'kkm_p' => $kkm_p,
+                'kkm_k' => $kkm_k,
+            ]);
+        }
+        
     }
 
     /**

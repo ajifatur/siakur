@@ -149,6 +149,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     // Nilai
     Route::get('/admin/nilai', 'NilaiController@index')->name('admin.nilai.index');
     Route::get('/admin/nilai/set/{gurumapel_id}/{rombel_id}', 'NilaiController@set')->name('admin.nilai.set');
+    Route::get('/admin/nilai/detail/{gurumapel_id}/{rombel_id}', 'NilaiController@detail')->name('admin.nilai.detail-siswa');
     Route::post('/admin/nilai/store', 'NilaiController@store')->name('admin.nilai.store');
 
     // Rapor
