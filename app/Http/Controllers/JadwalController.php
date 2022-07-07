@@ -31,9 +31,6 @@ class JadwalController extends Controller
         // Mengambil data rombel
         $rombel = Rombel::orderBy('nama','asc')->get();
 
-        // Mengambil data anggota rombel
-        $anggota_rombel = AnggotaRombel::has('rombel')->has('siswa')->where('siswa_id','=',Auth::user()->siswa->id)->where('ta_id','=',tahun_akademik()->id)->first();
-
         // Mengambil data guru mapel
         $guru_mapel = GuruMapel::orderBy('mapel_id','asc')->get();
 
@@ -58,7 +55,9 @@ class JadwalController extends Controller
             ]);
         }
         elseif(Auth::user()->role_id == role('siswa')) {
-
+            // Mengambil data anggota rombel
+            $anggota_rombel = AnggotaRombel::has('rombel')->has('siswa')->where('siswa_id','=',Auth::user()->siswa->id)->where('ta_id','=',tahun_akademik()->id)->first();
+            
             // View
             return view('admin/jadwal/index-siswa', [
                 'jp' => $jp,
