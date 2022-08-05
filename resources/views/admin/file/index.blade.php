@@ -27,7 +27,7 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
-                                @if(Auth::user()->role_id == role('super-admin'))
+                                @if(Auth::user()->role_id == role('super-admin') ||  Auth::user()->guru->waka_kurikulum)
                                 <th>Guru</th>
                                 @endif
                                 <th>Mata Pelajaran</th>
@@ -39,7 +39,7 @@
                             @foreach($file as $f)
                             <tr>
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
-                                @if(Auth::user()->role_id == role('super-admin'))
+                                @if(Auth::user()->role_id == role('super-admin') || Auth::user()->guru->waka_kurikulum)
                                 <td>{{ $f->guru_mapel->guru->nama }}</td>
                                 @endif
                                 <td>{{ $f->guru_mapel->mapel->nama }}</td>
