@@ -26,7 +26,7 @@ class FileController extends Controller
         // Mengambil data jenis file
         $jenis_file = JenisFile::findOrFail($request->query('id'));
 
-        if(Auth::user()->role_id == role('super-admin') || Auth::user()->guru && Auth::user()->guru->waka_kurikulum) {
+        if(Auth::user()->role_id == role('super-admin') || Auth::user()->guru && Auth::user()->guru->waka_kurikulum->where('ta_id','=',tahun_akademik()->id)->count() > 0) {
             // Mengambil data file
             $file = Berkas::has('guru_mapel')->has('kelas')->where('jenisfile_id','=',$jenis_file->id)->where('ta_id','=',session()->get('taa'))->get();
 
