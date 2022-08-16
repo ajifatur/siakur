@@ -24,7 +24,7 @@ class SiswaController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data siswa
-        $siswa = Siswa::orderBy('nama','asc')->get();
+        $siswa = Siswa::doesntHave('mutasi_siswa')->orderBy('nama','asc')->get();
 
         // View
         return view('admin/siswa/index', [

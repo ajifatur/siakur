@@ -156,6 +156,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/rapor', 'RaporController@index')->name('admin.rapor.index');
     Route::get('/admin/rapor/detail/{id}', 'RaporController@detail')->name('admin.rapor.detail');
     Route::post('/admin/rapor/store', 'RaporController@store')->name('admin.rapor.store');
+    Route::get('/admin/rapor/cetak_pdf/{id}', 'RaporController@cetak_pdf')->name('admin.rapor.cetak_pdf');
 
     // File
     Route::get('/admin/file', 'FileController@index')->name('admin.file.index');

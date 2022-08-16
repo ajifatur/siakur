@@ -32,4 +32,12 @@ class Siswa extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * Mutasi Siswa.
+     */
+    public function mutasi_siswa()
+    {
+        return $this->hasOne(MutasiSiswa::class);
+    }
 }

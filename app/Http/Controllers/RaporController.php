@@ -13,6 +13,7 @@ use App\Models\Mapel;
 use App\Models\Rapor;
 use App\Models\TahunAkademik;
 use App\Models\WaliKelas;
+use \PDF;
 
 class RaporController extends Controller
 {
@@ -80,6 +81,27 @@ class RaporController extends Controller
             ]);
         }
         else abort(403);
+    }
+
+    /**
+     * Print PDF.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cetak_pdf($id)
+    {
+        // Mengambil data wali kelas
+        $wali_kelas = Auth::user()->guru->wali_kelas()->has('rombel')->where('ta_id','=',session()->get('taa'))->firstOrFail();
+
+        // Mengambil data anggota rombel
+        $anggota_rombel = $wali_kelas ? AnggotaRombel::has('rombel')->has('siswa')->where('rombel_id','=',$wali_kelas->rombel_id)->where('siswa_id','=',$id)->where('ta_id','=',session()->get('taa'))->first() : null;
+
+        // Mengambil data rapor
+        $rapor = $anggota_rombel != null ? Rapor::where('siswa_id','=',$anggota_rombel->siswa_id)->where('rombel_id','=',$anggota_rombel->rombel_id)->where('ta_id','=',session()->get('taa'))->first() : null;
+     
+        $pdf = PDF::loadview('admin/rapor/cetak-rapor', ['rapor'=>$rapor])->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->download('rapor.pdf');
     }
 
     /**

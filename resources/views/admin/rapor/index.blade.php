@@ -27,16 +27,18 @@
                             </thead>
                             <tbody>
                                 @foreach($anggota_rombel as $ar)
+                                @if($ar->siswa && !$ar->siswa->mutasi_siswa) 
                                 <tr>
                                     <td align="right">{{ $ar->no_urut }}</td>
                                     <td>{{ $ar->siswa ? $ar->siswa->nama : '-' }}</td>
                                     <td align="center">
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.rapor.detail', ['id' => $ar->siswa_id]) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Atur Rapor"><i class="bi-wrench"></i></a>
+                                            <a href="{{ route('admin.rapor.cetak_pdf', ['id' => $ar->siswa_id]) }}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Atur Rapor"><i class="bi-wrench"></i></a>
                                             <a href="{{ route('admin.rapor.detail', ['id' => $ar->siswa_id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Cetak Rapor"><i class="bi-printer"></i></a>
                                         </div>
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
