@@ -49,6 +49,7 @@
                         </thead>
                         <tbody>
                             @foreach($anggota_rombel as $ar)
+                            @if($ar->siswa && !$ar->siswa->mutasi_siswa)
                             <tr>
                                 @foreach($ulangan as $u)
                                 <td width="50">
@@ -67,6 +68,7 @@
                                     <span class="fw-bold total-k" data-id="{{ $ar->siswa_id }}">{{ total_nilai($ar->siswa_id, $guru_mapel->id, 2) }}</span>
                                 </td>
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
