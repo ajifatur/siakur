@@ -32,7 +32,7 @@
                         </thead>
                         <tbody>
                             @foreach($mapel as $m)
-                            <tr>
+                            <tr data-url="{{ route('admin.mapel.detail', ['id' => $m->id]) }}">
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
                                 <td>{{ $m->kode }}</td>
                                 <td>{{ $m->nama }}</td>
@@ -65,8 +65,26 @@
     // DataTable
     Spandiv.DataTable("#datatable");
 
+    // DataTable rows clicked
+    $(document).on("click", "#datatable tbody tr td:not([align])", function(e) {
+        e.preventDefault();
+        var selection = getSelection().toString();
+        if(selection == '') {
+            var url = $(this).parents('tr').data("url");
+            window.location.href = url;
+        }
+    });
+
     // Button Delete
     Spandiv.ButtonDelete(".btn-delete", ".form-delete");
 </script>
+
+@endsection
+
+@section('css')
+
+<style>
+    #datatable tbody tr td:not([align]) {cursor: pointer;}
+</style>
 
 @endsection

@@ -1,14 +1,11 @@
 @extends('faturhelper::layouts/admin/main')
 
-@section('title', 'Kelola Guru Mata Pelajaran')
+@section('title', 'Kelola Mata Pelajaran')
 
 @section('content')
 
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-2 mb-sm-0">Kelola Guru Mata Pelajaran</h1>
-    <div class="btn-group">
-        <a href="{{ route('admin.guru-mapel.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Guru Mata Pelajaran</a>
-    </div>
+    <h1 class="h3 mb-2 mb-sm-0">Detail Mata Pelajaran: {{ $mapel->nama }}</h1>
 </div>
 <div class="row">
 	<div class="col-12">
@@ -25,17 +22,17 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
-                                <th>Mata Pelajaran</th>
-                                <th>Guru</th>
+                                <th>Nama</th>
+                                <th>Tahun Akademik</th>
                                 <th width="60">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($guru_mapel as $gm)
-                            <tr>
+                            <tr class="{{ session('period') == $gm->period_id ? 'bg-success text-white' : '' }}">
                                 <td align="center"><input type="checkbox" class="form-check-input checkbox-one"></td>
-                                <td><a href="{{ route('admin.mapel.detail', ['id' => $gm->mapel->id]) }}">{{ $gm->mapel ? $gm->mapel->nama : '-' }}</a></td>
-                                <td>{{ $gm->guru ? $gm->guru->nama : '-' }}</td>
+                                <td>{{ $gm->guru->nama }}</td>
+                                <td>{{ $gm->period->name }}</td>
                                 <td align="center">
                                     <div class="btn-group">
                                         <a href="{{ route('admin.guru-mapel.edit', ['id' => $gm->id]) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit"><i class="bi-pencil"></i></a>

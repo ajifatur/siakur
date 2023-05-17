@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Mapel;
+use App\Models\GuruMapel;
 
 class MapelController extends Controller
 {
@@ -77,6 +78,30 @@ class MapelController extends Controller
             // Redirect
             return redirect()->route('admin.mapel.index')->with(['message' => 'Berhasil menambah data.']);
         }
+    }
+
+    /**
+     * Show the detail of the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        // Check the access
+        // has_access(method(__METHOD__), Auth::user()->role_id);
+
+        // Mengambil data mapel
+        $mapel = Mapel::findOrFail($id);
+
+        // Mengambil data guru mapel
+        $guru_mapel = GuruMapel::with('period')->with('guru')->where('mapel_id','=',$mapel->id)->get()->sortBy('guru.nama')->sortBy('period.num_order');
+
+        // View
+        return view('admin/mapel/detail', [
+            'mapel' => $mapel,
+            'guru_mapel' => $guru_mapel
+        ]);
     }
 
     /**

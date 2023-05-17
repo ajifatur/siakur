@@ -96,11 +96,11 @@ class JadwalController extends Controller
             elseif($request->type == 'update')
                 $jadwal = Jadwal::findOrFail($request->id);
 
+            $jadwal->period_id = session('period');
             $jadwal->hari = $request->hari;
             $jadwal->jp_id = $request->jam;
             $jadwal->rombel_id = $request->rombel;
             $jadwal->gurumapel_id = $request->mapel;
-            $jadwal->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
             $jadwal->save();
 
             // Redirect

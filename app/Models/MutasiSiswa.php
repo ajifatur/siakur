@@ -14,7 +14,7 @@ class MutasiSiswa extends Model
      *
      * @var string
      */
-    protected $table = 'mutasi_siswa';
+    protected $table = 'tbl_mutasi_siswa';
 
     /**
      * The attributes that are mass assignable.

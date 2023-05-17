@@ -14,7 +14,7 @@ class WaliKelas extends Model
      *
      * @var string
      */
-    protected $table = 'wali_kelas';
+    protected $table = 'tbl_wali_kelas';
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +24,14 @@ class WaliKelas extends Model
     protected $fillable = [
         
     ];
+    
+    /**
+     * Mengambil periode.
+     */
+    public function period()
+    {
+        return $this->belongsTo(\Ajifatur\FaturHelper\Models\Period::class, 'period_id');
+    }
     
     /**
      * Mengambil guru yang memiliki rombel.

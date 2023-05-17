@@ -4,8 +4,6 @@
 
 @section('content')
 
-@include('admin/partials/tahun-akademik')
-
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-2 mb-sm-0">Kelola Jadwal</h1>
 </div>
@@ -42,7 +40,7 @@
                                 <td width="30"><small>{{ $j->jam_mulai }}-{{ $j->jam_selesai }}</small></td>
                                 @for($i=1;$i<=6;$i++)
                                     @foreach($rombel as $r)
-                                        <?php $jadwal = \App\Models\Jadwal::where('jp_id','=',$j->id)->where('rombel_id','=',$r->id)->where('ta_id','=',session()->get('taa'))->where('hari','=',$i)->first(); ?>
+                                        <?php $jadwal = \App\Models\Jadwal::has('guru_mapel')->where('period_id','=',session('period'))->where('jp_id','=',$j->id)->where('rombel_id','=',$r->id)->where('hari','=',$i)->first(); ?>
                                         @if($jadwal)
                                             <td width="30">
                                                 <a href="#" class="btn-detail" data-bs-toggle="tooltip" title="Detail Jadwal" data-id="{{ $jadwal->id }}" data-hari="{{ $i }}" data-jam="{{ $j->id }}" data-rombel="{{ $r->id }}" data-mapel="{{ $jadwal->gurumapel_id }}">{{ $jadwal->guru_mapel->mapel->kode }}</a>

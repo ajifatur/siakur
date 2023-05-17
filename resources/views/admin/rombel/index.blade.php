@@ -1,13 +1,13 @@
 @extends('faturhelper::layouts/admin/main')
 
-@section('title', 'Kelola Rombel')
+@section('title', 'Kelola Kelas')
 
 @section('content')
 
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-2 mb-sm-0">Kelola Rombel</h1>
+    <h1 class="h3 mb-2 mb-sm-0">Kelola Kelas</h1>
     <div class="btn-group">
-        <a href="{{ route('admin.rombel.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Rombel</a>
+        <a href="{{ route('admin.rombel.create') }}" class="btn btn-sm btn-primary"><i class="bi-plus me-1"></i> Tambah Kelas</a>
     </div>
 </div>
 <div class="row">
@@ -26,7 +26,7 @@
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
                                 <th>Nama</th>
-                                <th width="100">Kelas</th>
+                                <th width="100">Grade</th>
                                 <th width="100">Jurusan</th>
                                 <th width="60">Opsi</th>
                             </tr>

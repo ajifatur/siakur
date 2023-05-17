@@ -1,11 +1,11 @@
 @extends('faturhelper::layouts/admin/main')
 
-@section('title', 'Tambah Rombel')
+@section('title', 'Tambah Kelas')
 
 @section('content')
 
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Tambah Rombel</h1>
+    <h1 class="h3 mb-0">Tambah Kelas</h1>
 </div>
 <div class="row">
 	<div class="col-12">
@@ -14,7 +14,7 @@
                 <form method="post" action="{{ route('admin.rombel.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
-                        <label class="col-lg-2 col-md-3 col-form-label">Kelas <span class="text-danger">*</span></label>
+                        <label class="col-lg-2 col-md-3 col-form-label">Grade <span class="text-danger">*</span></label>
                         <div class="col-lg-10 col-md-9">
                             <select name="kelas" class="form-select form-select-sm {{ $errors->has('kelas') ? 'border-danger' : '' }}">
                                 <option value="" disabled selected>--Pilih--</option>

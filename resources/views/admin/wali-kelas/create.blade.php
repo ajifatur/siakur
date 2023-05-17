@@ -14,7 +14,7 @@
                 <form method="post" action="{{ route('admin.wali-kelas.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
-                        <label class="col-lg-2 col-md-3 col-form-label">Rombel <span class="text-danger">*</span></label>
+                        <label class="col-lg-2 col-md-3 col-form-label">Kelas <span class="text-danger">*</span></label>
                         <div class="col-lg-10 col-md-9">
                             <select name="rombel" class="form-select form-select-sm {{ $errors->has('rombel') ? 'border-danger' : '' }}">
                                 <option value="" disabled selected>--Pilih--</option>

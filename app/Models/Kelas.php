@@ -14,7 +14,7 @@ class Kelas extends Model
      *
      * @var string
      */
-    protected $table = 'kelas';
+    protected $table = 'tbl_grade';
 
     /**
      * The attributes that are mass assignable.
@@ -24,20 +24,4 @@ class Kelas extends Model
     protected $fillable = [
         'nama'
     ];
-
-    // /**
-    //  * Get the users for the role.
-    //  */
-    // public function users()
-    // {
-    //     return $this->hasMany(User::class);
-    // }
-
-    // /**
-    //  * The permissions that belong to the role.
-    //  */
-    // public function permissions()
-    // {
-    //     return $this->belongsToMany(Permission::class, 'role__permission', 'role_id', 'permission_id');
-    // }
 }

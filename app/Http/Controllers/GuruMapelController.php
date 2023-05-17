@@ -24,7 +24,7 @@ class GuruMapelController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data guru mapel
-        $guru_mapel = GuruMapel::where('ta_id','=',session()->get('taa'))->get();
+        $guru_mapel = GuruMapel::where('period_id','=',session('period'))->orderBy('mapel_id','asc')->get();
 
         // View
         return view('admin/guru-mapel/index', [
@@ -79,7 +79,7 @@ class GuruMapelController extends Controller
             $guru_mapel = new GuruMapel;
             $guru_mapel->mapel_id = $request->mapel;
             $guru_mapel->guru_id = $request->guru;
-            $guru_mapel->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
+            $guru_mapel->period_id = session('period');
             $guru_mapel->save();
 
             // Redirect

@@ -4,8 +4,6 @@
 
 @section('content')
 
-@include('admin/partials/tahun-akademik')
-
 <div class="d-sm-flex justify-content-between align-items-center mb-3">
     <h1 class="h3 mb-2 mb-sm-0">Kelola Wali Kelas</h1>
     <div class="btn-group">
@@ -27,7 +25,7 @@
                         <thead class="bg-light">
                             <tr>
                                 <th width="30"><input type="checkbox" class="form-check-input checkbox-all"></th>
-                                <th>Rombel</th>
+                                <th>Kelas</th>
                                 <th>Guru</th>
                                 <th width="60">Opsi</th>
                             </tr>

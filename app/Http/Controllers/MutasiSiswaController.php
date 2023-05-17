@@ -24,7 +24,7 @@ class MutasiSiswaController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data mutasi siswa
-        $mutasi_siswa = MutasiSiswa::where('ta_id','=',session()->get('taa'))->get();
+        $mutasi_siswa = MutasiSiswa::where('period_id','=',session('period'))->get();
 
         // View
         return view('admin/mutasi-siswa/index', [
@@ -74,10 +74,10 @@ class MutasiSiswaController extends Controller
         else {
             // Simpan mutasi siswa
             $mutasi_siswa = new MutasiSiswa;
+            $mutasi_siswa->period_id = session('period');
             $mutasi_siswa->siswa_id = $request->siswa;
             $mutasi_siswa->tujuan = $request->tujuan;
             $mutasi_siswa->tanggal = DateTimeExt::change($request->tanggal);
-            $mutasi_siswa->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
             $mutasi_siswa->save();
 
             // Redirect

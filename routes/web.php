@@ -73,6 +73,7 @@ Route::group(['middleware' => ['faturhelper.admin']], function() {
     Route::get('/admin/mapel', 'MapelController@index')->name('admin.mapel.index');
     Route::get('/admin/mapel/create', 'MapelController@create')->name('admin.mapel.create');
     Route::post('/admin/mapel/store', 'MapelController@store')->name('admin.mapel.store');
+    Route::get('/admin/mapel/detail/{id}', 'MapelController@detail')->name('admin.mapel.detail');
     Route::get('/admin/mapel/edit/{id}', 'MapelController@edit')->name('admin.mapel.edit');
     Route::post('/admin/mapel/update', 'MapelController@update')->name('admin.mapel.update');
     Route::post('/admin/mapel/delete', 'MapelController@delete')->name('admin.mapel.delete');

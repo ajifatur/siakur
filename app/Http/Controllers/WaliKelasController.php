@@ -24,7 +24,7 @@ class WaliKelasController extends Controller
         // has_access(method(__METHOD__), Auth::user()->role_id);
 
         // Mengambil data wali kelas
-        $wali_kelas = WaliKelas::where('ta_id','=',session()->get('taa'))->get();
+        $wali_kelas = WaliKelas::where('period_id','=',session('period'))->get();
 
         // View
         return view('admin/wali-kelas/index', [
@@ -77,9 +77,9 @@ class WaliKelasController extends Controller
         else {
             // Simpan wali kelas
             $wali_kelas = new WaliKelas;
+            $wali_kelas->period_id = session('period');
             $wali_kelas->rombel_id = $request->rombel;
             $wali_kelas->guru_id = $request->guru;
-            $wali_kelas->ta_id = tahun_akademik() != null ? tahun_akademik()->id : 0;
             $wali_kelas->save();
 
             // Redirect
